@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>morzė ir cezaris</title>
+	<style>
+		#forma {
+			width: 500px;
+		}
+		label {
+			width: 100%;
+		}
+		tekstas {
+		}
+	</style>
+	<script>
+		var 
+			taskas = '&middot;', bruksnys = '&ndash;';
+			raides = [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',  
+				
+				'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+				'.', ',', '?', "'", '!', '/', '(', ')', ' &', ':', ';', '=', '–', '_', '"', '$', '@'
+			];
+			morzes = [ '·-', '-···', '-·-·', '-··', '·', '··-·', '--·', '····', '··', '·---', '-·-', '·-··', '--', '-·', '---', '·--·', '--·-', '·-·', '···', '-', '··-', '···-', '·--', '-··-', '-·--', '--··', 
+				
+				'-----', '·----', '··---', '···--', '····-', '·····', '-····', '--···', '---··', '----·',
+				'·-·-·-', '--··--', '··--··', '·----·', '-·-·--', '-··-·', '-·--·', '-·--·-', '·-···', '---···', '-·-·-·', '-···-', '-····-', '··-- ·-', '·-··-·', '···-··-', '·--·-·'
+			];
+			/*
+				Trupmenos brūkšnelis (matematikoje)	-··-·                                       ! neužkoduota
+			*/
+			lt_raides = [ 'Ą', 'Č', 'Ę', 'Ė', 'Į', 'Š', 'Ų', 'Ū', 'Ž' ];
+			lot_raides = [ 'A', 'C', 'E', 'E', 'I', 'S', 'U', 'U', 'Z'  ];
+			
+			nesukeisti  = [ ' ' , '\t', '\n' ];
+			
+		function sukeisti ( eilute, i )	 {
+		
+			return eilute.substr ( 0, i )  +  eilute [ i + 1 ] + eilute [ i ] + eilute.substr ( i +  2 );
+		}
+	
+		function sifruoti() {
+		
+			tekstas = document.getElementById ( 'tekstas' ).innerHTML;
+			tekstas_res = '';
+			
+			num_lt_simb = 0; lt_simb = [];
+			
+			/**
+			* šifravimas Cezario šifru
+			*/
+			iki = tekstas.length;
+			
+			if ( ( tekstas.length % 2 ) != 0 ) {
+			
+				iki = tekstas.length - 1;
+			}
+			
+			for ( i = 0; i< iki; i+=2 ) {
+			
+			           // console.log ( i + " " + tekstas [ i ]  + "~" + tekstas [ i + 1 ] + ": "+ ( ( tekstas [ i ]  != ' ' ) && ( tekstas [ i + 1 ] !=  ' ' ) ) );
+			
+				if ( ( nesukeisti.indexOf ( tekstas [ i ] ) == - 1 ) && ( nesukeisti.indexOf ( tekstas [ i + 1 ] ) == -1 ) ) { 
+					
+					tekstas = sukeisti ( tekstas, i );
+				}
+			}
+			// tekstas_res = tekstas;
+			
+			/**
+			* šifravimas pagal morzės abėcėlę
+Miego trukumas kenkia prakti�kai visoms organizmo funkcijoms.			*/
+			for ( i = 0; i < tekstas.length; i++ ) {
+			
+				/**
+				* keitimas lietuviškų raidžių į lotyniškas ir jų visų kitų (lotyniškų) keitimas į didžiasias
+				*/				
+				if ( (  num_lot_raides = lt_raides.indexOf ( tekstas [ i ].toUpperCase() ) ) !==  -1 ) {
+				
+					num_lt_simb++;
+					lt_simb.push ( tekstas [ i ] );
+					
+					simbolis = lot_raides [ num_lot_raides ];
+					
+				} else {
+				
+					simbolis = tekstas [ i ].toUpperCase();
+				}
+				
+				/**
+				* keitimas į morzės abėcėlę
+				*/				
+				if ( ( num_raides = raides.indexOf ( simbolis ) ) !== -1 ) {
+				
+					morzes_simb = morzes [ num_raides ];
+					tekstas_res += morzes_simb + ' ';
+					
+				} else {
+				
+					switch ( simbolis ) {
+						
+						case ' ': tekstas_res += '  '; break;
+						
+						case '\n': tekstas_res += '<br><br>'; break;
+						
+						default: 
+					
+							tekstas_res += simbolis;
+					}
+				}
+			} 
+			res = document.getElementById ( 'res' );
+			res.innerHTML = 'num. lt. simb.: ' + num_lt_simb + ' surastos liet. raidės: ' + lt_simb.join ( ', ' ) + '<br>' + tekstas_res;
+		}
+	</script>
+</head>
+<body>
+	<h3>Teksto šifravimas ir keitimas pagal morzes abėcėlę</h3>
+	<div id="forma">
+	<label for="tekstas">Keičiamas tekstas</label>
+	<textarea id="tekstas" rows="30" cols="150">Miego trūkumas kenkia praktiškai visoms organizmo funkcijoms.</textarea>
+	<!--Jei prastai miegosite, susidursite su virškinimo problemomis, širdies sveikatos bėdomis, išaugusia protinių ligų rizika ir daugybe kitų grėsmių, kurių jums tiesiog nereikia. Ir vis dėlto daugybė žmonių nesilaiko miego režimo. Jei miegoti neinate,nes norite užbaigti dienos darbus, darote labai didelę klaidą.
+Mokslininkai pakvietė 138 žmones dalyvauti tyrime. 77 nemiegojo visą naktį, 61 gerai išsimiegojo savo lovoje. Dar vakare dalyviai atliko du testus. Vienas bandymas matavo reakcijos laiką, kitas – gebėjimą išlaikyti veiksmų seką. Pastarasis testas yra labai įdomus, nes jis matuoja kognityvines galimybes išlaikyti dėmesį, prisiminti savo paskutinį veiksmą ir planuoti kitą. Tuos pačius bandymus dalyviai atliko ir ryte.
+Skaitykite daugiau: https://www.delfi.lt/mokslas/mokslas/miego-trukumas-mus-veikia-zymiai-labiau-nei-manyta-siandien-gulkites-anksciau.d?id=82944441-->
+	</div>
+	<input type="button" id="vykdyti" value="keisti" onClick="sifruoti()">
+	<div id="res">
+	</div>
+</body>
+</html>

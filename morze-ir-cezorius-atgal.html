@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>morzė ir cezaris</title>
+	<style>
+		#forma {
+			width: 500px;
+		}
+		label {
+			width: 100%;
+		}
+		tekstas {
+		}
+	</style>
+	<script>
+		var 
+		
+			tarp_res;
+			res_tekstas = [];
+			morzes_raide = [];
+			sukeista_morze = [];
+			iki;
+		
+			raides = [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',  
+				
+				'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+				'.', ',', '?', "'", '!', '/', '(', ')', ' &', ':', ';', '=', '–', '_', '"', '$', '@'
+			];
+			morzes = [ '·-', '-···', '-·-·', '-··', '·', '··-·', '--·', '····', '··', '·---', '-·-', '·-··', '--', '-·', '---', '·--·', '--·-', '·-·', '···', '-', '··-', '···-', '·--', '-··-', '-·--', '--··', 
+				
+				'-----', '·----', '··---', '···--', '····-', '·····', '-····', '--···', '---··', '----·',
+				'·-·-·-', '--··--', '··--··', '·----·', '-·-·--', '-··-·', '-·--·', '-·--·-', '·-···', '---···', '-·-·-·', '-···-', '-····-', '··-- ·-', '·-··-·', '···-··-', '·--·-·'
+			];
+			/*
+				Trupmenos brūkšnelis (matematikoje)	-··-·                                       ! neužkoduota
+			*/
+			
+			nesukeisti  = [ ' ' , '\t', '\n' ];		
+		
+		
+		function morzes_raidziu_skaicius( tekstas ) {
+		
+			var	viso_morzes_raidziu = 0;
+				nuo = 0;
+			
+			for ( i = 0; i < tekstas.length; i++ ) {
+						
+				if ( tekstas [ i ] == " "  ) {
+				
+					viso_morzes_raidziu += 1;
+					morzes_raide.push ( tekstas.substr ( nuo, i - nuo ) );
+					nuo = i + 1;
+				}
+			}
+			morzes_raide.push ( tekstas.substr ( nuo ) );
+			viso_morzes_raidziu +=1;
+			alert(  'teksto ilgis: ' + tekstas.length );
+			alert(  'morzes raide: ' + morzes_raide.join(',') );
+			tarp_res.innerHTML +=  'viso morzės raidžių: ' + viso_morzes_raidziu;
+			return viso_morzes_raidziu;
+		}	
+	
+		function sifruoti() {
+		
+			tekstas = document.getElementById ( 'tekstas' ).innerHTML;
+			tarp_res = document.getElementById ( 'tarp_res' );
+			res = document.getElementById ('res');
+			res.innerHTML = morzes_raidziu_skaicius( tekstas );
+			/**
+			* šifravimas Cezario šifru
+			*/
+
+			if ( ( morzes_raidziu_skaicius % 2 ) != 0 ) {
+			
+				iki = morzes_raidziu_skaicius - 1;
+			}
+			else {
+				iki = morzes_raidziu_skaicius;
+			}
+			alert(  'iki:  ' + iki );
+			
+			for ( i = 0; i< iki; i+=2 ) {
+			
+				if ( ( nesukeisti.indexOf ( morzes_raide [ i ] ) == - 1 ) && ( nesukeisti.indexOf ( morzes_raide [ i + 1 ] ) == -1 ) ) { 
+	
+
+					sukeista_morze [i] = morzes_raide [i+1];
+					sukeista_morze [i+1] = morzes_raide [i];
+				}
+				
+				
+			res = document.getElementById ( 'res' );
+			res.innerHTML = res_tekstas;	
+			}
+			
+			// tekstas_res = tekstas;
+			
+			/*
+			 šifravimas pagal morzės abėcėlę
+			*/
+			for ( i = 0; i < iki; i++ ) {
+			/*
+			keitimas į raidžių abėcėlę
+			*/			
+				if ( ( raides = morzes.indexOf ( morzes_raide [ i ] ) ) !== -1 ) {
+				
+					raides_simb = raides [ num_morzes ];
+					tekstas_res += raides_simb + ' ';
+					
+				} else {
+				
+					switch ( simbolis ) {
+						
+						case ' ': tekstas_res += '  '; break;
+						
+						case '\n': tekstas_res += '<br><br>'; break;
+						
+						default: 
+					
+							tekstas_res += simbolis;
+					}
+				}
+			}  
+			res = document.getElementById ( 'res' );
+			res.innerHTML = tekstas_res; 
+		}
+	</script>
+</head>
+<body>
+	<h3>Teksto šifravimas ir keitimas pagal morzes abėcėlę</h3>
+	<div id="forma">
+	<label for="tekstas">Keičiamas tekstas</label>
+	<textarea id="tekstas" rows="30" cols="100">·· -- --· · --- --·- ··· -·- - -- - ·-· ·- -·- -· · ·· -·- ·- --·- ·--· -·- ·- ·· ··· -·- ·-· ·· ·- ··- ·-· ·· -- --- ·-· --·- --- ·- --· ·· -· -- -·-- --- - ··-· -·- -· ·· -·-· --- ·--- ·-· -- ----·</textarea>
+	</div>
+	<input type="button" id="vykdyti" value="keisti" onClick="sifruoti()">
+	<div id="tarp_res">
+	</div>	
+	<div id="res">
+	</div>
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>mainpage</title>
+	<style>
+		body {
+			background-color: #ebeae6;
+			background-image: url("background.gif");
+		}
+		#menu {
+			box-sizing: border-box;
+			padding: 24px;
+			margin: 12px;
+			background-color: #011926;
+			color:white;
+			position:relative;
+			font-family: Arial;
+			text-align: center;
+			font-size:100%;
+			font-stretch:expanded;
+		}
+		#pavadinimas { 
+			box-sizing: border-box;
+			padding: 14px;
+			margin: 12px;
+			color:black;
+			font-family: Arial;
+			text-align: center;
+			font-size:200%;
+		}
+		#virselis {
+			-webkit-border-radius:10px;
+			-moz-border-radius:10px;
+			border-radius:10px;
+			border-style: solid;
+			border-width:1px;
+			border-color:lightgrey;
+			padding: 0;
+			width:385px;
+			height:575px;
+			background-color: #f4f4f4;
+			color:black;
+			position:relative;
+			font-family: Arial;
+			text-align: right;
+			font-size:70%;
+			font-stretch:expanded;
+		}
+		#oreilly {
+			box-sizing: border-box;
+			padding: 7px;
+			width:100px;
+			background-color: #2e2e2c;
+			color:white;
+			position:absolute;
+			top:0;
+			left:36px;
+			font-family: Arial;
+			text-align: center;
+			font-size:200%;
+			font-stretch:expanded;
+		}
+		#tekstas {
+			box-sizing: border-box;
+			letter-spacing:-0.5px;
+			-webkit-border-top-left-radius: 10px;
+			-webkit-border-top-right-radius: 10px;
+			-moz-border-radius-topleft: 10px;
+			-moz-border-radius-topright: 10px;
+			border-top-left-radius: 10px;
+			border-top-right-radius: 10px;
+			position:absolute;
+			top:0px;
+			padding-top:24px;
+			padding-right:24px;
+			padding-left:24px;
+			width:379px;
+			height:25%;
+			background-color: #f4f4f4;
+			color:black;
+			font-family: Arial;
+			text-align: right;
+			font-size:80%;
+			font-stretch:expanded;
+		}
+		#tekstasbold {
+			font-weight:bold;			
+		}
+		#tekstascaps {
+			font-size:200%;
+		}
+		#completeseries {
+			box-sizing: border-box;
+			width:379px;
+			height:30%;
+			padding-right:24px;
+			background-color: #ffffff;
+			display: table-cell;
+			vertical-align: middle;
+			color:black;
+			position:absolute;
+			font-family: Arial;
+			text-align: right;
+			top:150px;
+			font-size:500%;
+			font-stretch:expanded;
+		}
+		#js {
+			box-sizing: border-box;
+			width:100%;
+			height:45%;
+			padding-top:24px;
+			padding-right:24px;
+			background-color: #f6dc3d;
+			color:black;
+			position:absolute;
+			top:316px;
+			font-family: Arial;
+			text-align: right;
+			vertical-align: text-bottom;
+			font-size:70%;
+			font-stretch:expanded;
+			-webkit-border-bottom-right-radius: 10px;
+			-webkit-border-bottom-left-radius: 10px;
+			-moz-border-radius-bottomright: 10px;
+			-moz-border-radius-bottomleft: 10px;
+			border-bottom-right-radius: 10px;
+			border-bottom-left-radius: 10px;		
+		}
+		#tekstasdesinej{
+	
+			float:left;
+			margin-left:400px;
+			width:calc(100% - 400px);
+			height:575px;
+			box-sizing: border-box;
+			padding: 14px;
+			padding-top:10%;	
+			color:black;
+			position:relative;
+			font-family: Arial;
+			text-align: center;
+			font-size:100%;
+			line-height: 200%;
+		}
+		#mygt1 {
+			box-sizing: border-box;
+			padding: 14px;
+			margin: 12px auto;
+			box-align: center;
+			background-color: #f88e37;
+			color:white;
+			position:relative;
+			font-family: impact;
+			text-align: center;
+			letter-spacing:0px;
+			font-stretch: ultra-condensed;
+			font-size:100%;
+			/ * width: 400px; */
+		}
+		#tekstasapacioj {
+			box-sizing: border-box;
+			padding: 24px;
+			margin: 12px;
+			background-color: #011926;
+			color:white;
+			position:relative;
+			font-family: Arial;
+			text-align: center;
+			font-size:100%;
+			font-stretch:expanded;
+		}
+		<!-- #div4x {
+			margin-right: auto;
+			margin-left: auto;
+		}-->
+		#mygt2 {
+			box-sizing: border-box;
+			padding: 14px;
+			margin: 12px;
+			background-color: #f88e37;
+			color:white;
+			position:relative;
+			font-family: impact;
+			text-align: center;
+			font-size:100%;
+			font-stretch:condensed;
+			width: 400px;
+		}
+		ul#menu_items {
+			list-style-type: none;
+			margin: 0 auto;
+			padding: 0;
+			text-align:center;
+			overflow: hidden;
+			width: 500px;
+		}
+		li {
+			float: left;
+		}
+
+		.menu_punktas {
+			display: block;
+			padding: 7px;
+			color:white;
+			position:relative;
+			font-family: Arial;
+			text-align: center;
+			font-size:100%;
+			text-decoration:none;
+		}
+		ul#menu_items > :first-child {
+			margin-left: auto;
+		}
+		.menu_punktas:hover {
+			text-decoration:underline;		
+		}
+	</style>
+	<script>
+		alert ( 'Labas Javascript pasauli' );
+	</script>
+</head>
+<body>
+<div id="menu">
+	<ul id="menu_items">
+		<li><a  href="javascript:void(0)" class="menu_punktas">The book series</a></li>
+		<li><a  href="javascript:void(0)" class="menu_punktas">Testimonials</a></li>
+		<li><a  href="javascript:void(0)" class="menu_punktas">The Author</a></li>
+		<li><a  href="javascript:void(0)" class="menu_punktas">Free resources</a></li>
+	</ul>
+</div>
+<h1 id="pavadinimas">
+You dont know JavaScript
+</h1>
+
+<!-- a href="https://www.youtube.com">Youtube</a>
+<a href="ate.html">link text</a -->
+	    	<div id="tekstasdesinej">
+	Don't just drift through Javascript. <br><br>
+	Understand how Javascript works <br><br>
+	Start your journey through the bumpy side of Javascript <br><br>
+		<input id = "mygt1" type ="button" value = "ORDER YOUR COPY NOW">
+
+	</div><!--tekstasdesinej-->
+	    <div id="virselis">
+	    <div id="tekstas">
+		<div id="oreilly">O'REILLY</div><!-- oreilly-->
+	    "When you strive to comprehend your code, you create better <br>
+	    work and become better at what you do. The code isn't just <br>
+	    your job anymore, it's your craft. This is why I love Up & Going."<br>
+	    <div id="tekstasbold">
+	    -JENN LUKAS. Frontend consultant<br>
+	    </div><!-- tekstasbold-->
+	     <div id="tekstascaps"><br><br>
+	    KYLE SIMPSON<br>
+	    </div><!-- tekstascaps-->
+	    </div><!-- tekstas-->
+	    <div id="completeseries">
+	    COMPLETE SERIES<br>
+	    </div><!-- completeseries-->
+	    <div id="js">
+	    <img src="picture1.png" alt="JS" height="204" width="284"><br>
+	    </div><!-- js-->
+	    </div><!-- virselis-->
+
+
+
+
+<div id="tekstasapacioj"><br>
+The first ebook in the book series is absolutely free.<br>
+<input id="mygt2" type="button" value="FIND OUT MORE ABOUT THIS OFFER"><br>
+<!--<div id="div4x">
+FIND OUT MORE ABOUT THIS OFFER
+</div>-->
+</div><!-- tekstasapacioj-->
+
+</body>
+</html>
