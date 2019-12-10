@@ -1,0 +1,149 @@
+<!DOCTYPE<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>miestai</title>
+	<style>
+		#sarasas {
+			float: right;
+			text-align: center;
+			border: 1px solid black;
+			padding: 7px;
+		}
+		
+		h3 {
+			color: blue;
+		}
+		.tinkama {
+			color: green;
+		}
+		.per_maza {
+		
+			color: brown;
+		}
+		#daikto_formos {
+		
+			border: 1px solid black;
+			width: 250px;
+			padding: 12px;
+		}
+		#daikto_formos input {
+		
+			width: 100%;
+			margin: 3px 4px;
+		}
+		#daikto_formos label {
+		
+			width: 100%;
+		}
+	</style>
+	<script src="miestu_sarasas.js"></script>
+	<script src="miestas.class.js"></script>
+	<script>
+	
+		miestai = [];
+		nr_tinkamu_miestu = [];
+	
+		function tikrinti() {
+		
+			/**
+			* duomenu įvedimas
+			*/		
+	  
+			tankis_nuo = parseInt ( document.getElementById ( 'tankis_nuo' ).value );			//priskiriama reiksme
+			tankis_iki = parseInt ( document.getElementById ( 'tankis_iki' ).value );	
+			
+			/**
+			* skaičiavimai
+			*/			
+			flag_pasiimti_min = true;
+			
+			t_miestai = -1; // reiksme -1 uztikrina kad perrenkant dezes, tokios nebus , tai bus mums tinkama deze
+		
+			for ( i = 0; i < miestai.length; i++ ) {
+			
+				if ( miestai [ i ]. arYraRibose (tankis_nuo, tankis_iki)){
+
+					if ( flag_pasiimti_min )  {
+					
+						t_miestai = i;
+					
+					} else {
+					
+						if ( miestai [ t_miestai ].tankis_nuo()<miestai [ i ].tankis_iki() ) {
+						
+							t_miestai = i;
+						}
+					
+					}
+					nr_tinkamu_miestu. push ( i );
+				}
+			}
+			/**
+			* rezultatu pateikimas 
+			*/
+			res_str = '';
+			
+			for ( i = 0; i < miestai.length; i++ ) {
+			
+				res_str += miestai [ i ].present();		//present() {  			//metodai - taip vadinamos funkcijos priklausancios klasei
+											// metodai dirba su savybemis per kreipini this. savybes bendros visems metodams 
+											//present gali but perdodama nustatita saviba dezes[ i ] ilgis plotis aukstis
+
+				if ( nr_tinkamu_miestu.indexOf ( i ) != -1  ) { 	// nr_tinkamu_deziu.indexOf istraukia is  [ i ] !=-1; kuri  reiskia duoto skaiciaus pozicijas masyve
+										 // simboliu masyvas, dotu simboliu eilute.. masyvas globaliai aprasytas, naudojamas virs fukction .
+										//   indexOf yra metodas . funkcija priklausanti objektui vadinama  metodu 
+										//, java ir javaskrypte masivas yra objektas. objektas yra domenis apjunkti su tos domenis tvarkanciomis funkcijomis
+					
+					res_str +='<span class="tinkama"> Telpa </span>';
+					
+				} else {
+				
+					res_str +='<span class="per_maza"> Netelpa</span>';				
+				}
+				
+				if ( i == t_miestai ) {
+				
+					res_str +='<span class="tinkama">daugiau</span>';					
+				}
+				res_str += '<br>'; 
+			}
+			rez = document.getElementById ( 'rezultatai' ); 
+			
+			rez.innerHTML = res_str;
+		}
+	 
+		function parodyti() {
+		
+			res_str = '';
+			
+			sar = document.getElementById ( 'sarasas' ); 
+						
+			for ( i = 0; i < lst_miestas.length; i++ ) {
+						
+				miestai.push ( new Miestas( lst_miestas [ i ] ) ); 
+				
+				res_str += miestai[ i ].present() + '<br>';
+			}
+			sar.innerHTML = res_str;
+		}
+	</script>
+</head>
+<body>
+	
+	<div id="sarasas"> 
+	</div> 
+	<div id="miestu_tankis">
+		<h3>zmoniu tankio tikrinimas</h3>
+		<label for="tankis_nuo">tankis_nuo</label>
+		<input type="text" name="tankis_nuo" id="tankis_nuo" value="0">
+		<label for="tankis_iki">tankis_iki</label>
+		<input type="text" name="tankis_iki" id="tankis_iki" value="0">
+		<input type="button" value="Tikrinti" onClick="tikrinti()">
+		<input type="button" value="Istraukti" onClick="parodyti()"> 
+	</div>
+	<div id="rezultatai">
+	
+	</div>
+</body>
+</html>

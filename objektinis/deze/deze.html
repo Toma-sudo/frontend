@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Dežės</title>
+	<style>
+		#sarasas {
+			float: right;
+			text-align: center;
+			border: 1px solid black;
+			padding: 7px;
+		}
+		h3 {
+			color: blue;
+		}
+		.tinkama {
+			color: green;
+		}
+		.per_maza {
+		
+			color: brown;
+		}
+		#daikto_formos {
+		
+			border: 1px solid black;
+			width: 250px;
+			padding: 12px;
+		}
+		#daikto_formos input {
+		
+			width: 100%;
+			margin: 3px 4px;
+		}
+		#daikto_formos label {
+		
+			width: 100%;
+		}
+	</style>
+	<script src="deziu_sarasas.js"></script>
+	<script src="deze.class.js"></script>
+	<!-- script src="nuorodos_man.class.js"></script -->	
+	<script>
+	
+		dezes = [];
+		nr_tinkamu_deziu = [];
+	
+		function tikrinti() {
+		
+			/**
+			* duomenu įvedimas
+			*/		
+			daikto_ilgis = parseInt ( document.getElementById ( 'ilgis' ).value );
+			daikto_plotis = parseInt ( document.getElementById ( 'plotis' ).value );			//priskiriama reiksme
+			daikto_aukstis = parseInt ( document.getElementById ( 'aukstis' ).value );	
+			
+			/**
+			* skaičiavimai
+			*/			
+			flag_pasiimti_min = true;
+			
+			t_dezes = -1; // reiksme -1 uztikrina kad perrenkant dezes, tokios nebus , tai bus mums tinkama deze
+		
+			for ( i = 0; i < dezes.length; i++ ) {
+			
+				if ( dezes [ i ]. arTilps ( daikto_ilgis, daikto_plotis, daikto_aukstis )  ) {
+
+					if ( flag_pasiimti_min )  {
+					
+						t_dezes = i;
+					
+					} else {
+					
+						if ( dezes [ t_dezes ].turis() > dezes [ i ].turis() ) {
+						
+							t_dezes = i;
+						}
+					
+					}
+					nr_tinkamu_deziu. push ( i );
+				}
+			}
+			/**
+			* rezultatu pateikimas 
+			*/
+			res_str = '';
+			
+			for ( i = 0; i < dezes.length; i++ ) {
+			
+				res_str += dezes [ i ].present();		//present() {  			//metodai - taip vadinamos funkcijos priklausancios klasei
+											// metodai dirba su savybemis per kreipini this. savybes bendros visems metodams 
+											//present gali but perdodama nustatita saviba dezes[ i ] ilgis plotis aukstis
+
+				if ( nr_tinkamu_deziu.indexOf ( i ) != -1  ) { 	// nr_tinkamu_deziu.indexOf istraukia is  [ i ] !=-1; kuri  reiskia duoto skaiciaus pozicijas masyve
+										 // simboliu masyvas, dotu simboliu eilute.. masyvas globaliai aprasytas, naudojamas virs fukction .
+										//   indexOf yra metodas . funkcija priklausanti objektui vadinama  metodu 
+										//, java ir javaskrypte masivas yra objektas. objektas yra domenis apjunkti su tos domenis tvarkanciomis funkcijomis
+					
+					res_str +='<span class="tinkama"> Tinkama </span>';
+					
+				} else {
+				
+					res_str +='<span class="per_maza"> Netinkama</span>';				
+				}
+				
+				if ( i == t_dezes ) {
+				
+					res_str +='<span class="tinkama">mažiausia </span>';					
+				}
+				res_str += '<br>';
+			}
+			rez = document.getElementById ( 'rezultatai' ); 
+			
+			rez.innerHTML = res_str;
+		}
+	
+		function parodyti() {
+		
+			res_str = '';
+			
+			sar = document.getElementById ( 'sarasas' ); 
+						
+			for ( i = 0; i < lst_dezes.length; i++ ) {
+						
+				dezes. push ( new Deze ( lst_dezes [ i ] ) );  //  ..( lst_dezes [ i ] )..   ima strukturu sarasa  is deziu_sarasas.js, perdoda struktura objektu
+											      //konstruktoriuj  ..( new Deze (..  ir jis perdodamas naudojant  ..dezes. push (..  i objektu, deziu masiva 
+											      // esanti virsuje ..dezes = [];..
+				res_str += dezes [ i ].present() + '<br>';
+			}
+			sar.innerHTML = res_str;
+		}
+	</script>
+</head>
+<body>
+	<div id="sarasas"> 
+	</div>
+	<div id="daikto_formos">
+	<h3>Daikto talpinimo tikrinimas</h3>
+	<label for="ilgis">Ilgis</label>
+	<input type="text" name="ilgis" id="ilgis" value="400">
+	<label for="plotis">Plotis</label>
+	<input type="text" name="plotis" id="plotis" value="400">
+	<label for="aukstis">Aukštis</label>
+	<input type="text" name="aukstis" id="aukstis" value="400">	
+	<input type="button" value="Tikrinti" onClick="tikrinti()">
+	<input type="button" value="Istraukti" onClick="parodyti()"> 
+	</div>
+	<div id="rezultatai">
+	</div>
+</body>
+</html>

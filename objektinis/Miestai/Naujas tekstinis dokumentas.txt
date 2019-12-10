@@ -1,0 +1,6 @@
+miestas turi sias savibes, pavadinimas gyventoju skaicius, plotas
+sukurti miesto klase.
+si klase turi tureti, mietodus paroditi, tankis(turis) ir ar patenka (ar tilps)
+kuriam perdadamos tankio ribos ir jis grazina logine reiksme ar tankis yra tarp tu ribu.
+paroditi miestu sarasa, sarasa nurodant ir tankius 
+, atrinkti miestus kuriu gyventoiju tankumas yra nuroditose ribose.

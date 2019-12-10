@@ -23,13 +23,13 @@
 	</style>
 	<script>
 		var 
-		
-			tarp_res,
+
 			res_tekstas = [],
 			morzes_raide = [],
 			sukeista_morze = [],
 			iki,
 			raides_simb,
+			morzes_raid_sk,
 		
 			raides = [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',  
 				
@@ -46,50 +46,65 @@
 			*/
 			
 			nesukeisti  = [ ' ' , '\t', '\n' ];
-			tekstas = document.getElementById ( 'tekstas' ).innerHTML;
-			tarp_res = document.getElementById ( 'tarp_res' );
-			res = document.getElementById ('res');			
+			
+			var 
+				tekstas,
+				tarp_res, 
+				res
+			;			
 		
 		
 		function morzes_raidziu_skaicius( tekstas ) {
 		
 			var	viso_morzes_raidziu = 0,
 				y = 0;
+			morzes_raide[y] = '';
 			
-			for ( i = 0; i < tekstas.length; i++ ) {
-						
-				if ( tekstas [ i ] == " " && tekstas [i + 1] != " " ) {
+			for ( i= 0; i < tekstas.length; i++ ) {
 				
-					viso_morzes_raidziu += 1;
-					tarp_res.innerHTML += morzes_raide[y] + ' ';
-					y++;
-
-					
-				} else {
-				morzes_raide[y] += tekstas [i];
-			}}
-		
+				if (tekstas [i] != ' ' ){
+					morzes_raide [ y ] += tekstas [ i ] ;
+				} 
+				else {
+					 if (tekstas[i+1] == 0){
+						console.log( 'morzes_raide: ' + morzes_raide [ y ] );
+						y++;
+						morzes_raide [ y ] = tekstas [ i + 1] ;
+						viso_morzes_raidziu += 1;
+						i++;
+					}
+					else {
+						console.log( 'morzes_raide: ' + morzes_raide [ y ] );
+						y++;
+						morzes_raide [y] = '';
+						viso_morzes_raidziu += 1;
+					}
+				}
+			}
 			viso_morzes_raidziu +=1;	
 			
 			return viso_morzes_raidziu;
 		}	
 	
 		function sifruoti() {
-			
-
+		
+			tekstas = document.getElementById ( 'tekstas' ).innerHTML;
+			tarp_res = document.getElementById ( 'tarp_res' );
+			res = document.getElementById ('res');
+			morzes_raid_sk = morzes_raidziu_skaicius( tekstas );
 
 			/**
 			* šifravimas Cezario šifru
 			*/
-			tarp_res.innerHTML +=  'viso morzės raidžių: ' + morzes_raidziu_skaicius( tekstas );
+			tarp_res.innerHTML +=  'viso morzės raidžių: ' + morzes_raid_sk;
 		
 			
-			if ( ( morzes_raidziu_skaicius( tekstas ) % 2 ) != 0 ) {
+			if (( morzes_raid_sk % 2 ) != 0 ) {
 			
-				iki = morzes_raidziu_skaicius( tekstas ) - 1;
+				iki = morzes_raid_sk - 1;
 			}
 			else {
-				iki = morzes_raidziu_skaicius( tekstas );
+				iki = morzes_raid_sk;
 			}
 			alert(  'iki:  ' + iki );
 			
@@ -112,7 +127,7 @@
 					res.innerHTML += sukeista_morze[i] + '  ' + sukeista_morze[i+1] + '  ';
 				}
 			}
-			if ( ( morzes_raidziu_skaicius( tekstas ) % 2 ) != 0 ) {
+			if (( morzes_raid_sk % 2 ) != 0 ) {
 				
 				sukeista_morze [iki] = morzes_raide [iki];
 				res.innerHTML += sukeista_morze[iki];
@@ -121,8 +136,8 @@
 	
 			// tekstas_res = tekstas;
 			
-			/*
-			 šifravimas pagal morzės abėcėlę */
+			
+			// šifravimas pagal morzės abėcėlę
 			
 			for ( i = 0; i < iki; i++ ) {
 			
@@ -147,7 +162,7 @@
 				}
 			res.innerHTML += res_tekstas [ i ]; 
 			}  
-			
+		
 		}
 	</script>
 </head>

@@ -1,0 +1,147 @@
+<!DOCTYPE<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>miestai</title>
+	<style>
+		h3 {
+			color: blue;
+		}
+		.tinkama {
+			color: brown;
+		}
+		.per_maza {
+		
+			color: green;
+		}
+		#tankis {
+		
+			border: 3px solid black;
+			width: 250px;
+			padding: 20px;
+		}
+		#tankis input {
+		
+			width: 95%;
+			margin: 2px 5px;
+		}
+			#sarasas {
+			text-align: left;
+			border: 1px solid black;
+			padding: 7px;
+		}
+			#rezultatai {
+			border: 1px solid black;
+		}
+	</style>
+	<script src="masinu_sarasas.js"></script>
+	<script src="masinos.class.js"></script>
+	<script>
+	
+		masinos = [];
+		nr_tinkamu_masinu = [];
+	
+		function tikrinti() {
+		
+			/**
+			* duomenu ivedimas
+			*/		
+	  
+			//sanaudos_nuo = parseInt ( document.getElementById ( 'sanaudos_nuo' ).value );			//priskiriama reiksme
+			sanaudos_iki = parseInt ( document.getElementById ( 'sanaudos_iki' ).value );	
+			
+			/**
+			* skaicçiavimai
+			*/			
+			flag_pasiimti_min = true;
+			
+			t_masinos = -1; // reiksme -1 uztikrina kad perrenkant dezes, tokios nebus , tai bus mums tinkama deze
+		
+			for ( i = 0; i < masinos.length; i++ ) {
+			
+				if ( masinos[ i ]. arYraRibose (  sanaudos_iki)){
+
+					if ( flag_pasiimti_min )  {
+					
+						t_masinos = i;
+					
+					} else {
+					
+						if ( masinos[ t_masinos].sanaudos_nuo()<masinos [ i ].sanaudos_iki() ) {
+						
+							t_masinos = i;
+						}
+					
+					}
+					nr_tinkamu_masinu. push ( i );
+				}
+			}
+			/**
+			* rezultatu pateikimas 
+			*/
+			res_str = '';
+			
+			for ( i = 0; i < masinos.length; i++ ) {
+			
+				res_str += masinos [ i ].present();		//present() {  			//metodai - taip vadinamos funkcijos priklausancios klasei
+											// metodai dirba su savybemis per kreipini this. savybes bendros visems metodams 
+											//present gali but perdodama nustatita saviba dezes[ i ] ilgis plotis aukstis
+
+				if ( nr_tinkamu_masinu.indexOf ( i ) != -1  ) { 
+				// nr_tinkamu_deziu.indexOf istraukia is  [ i ] !=-1; kuri  reiskia duoto skaiciaus pozicijas masyve
+				 // simboliu masyvas, dotu simboliu eilute.. masyvas globaliai aprasytas, naudojamas virs fukction .
+				//   indexOf yra metodas . funkcija priklausanti objektui vadinama  metodu 
+				//, java ir javaskrypte masivas yra objektas. objektas yra domenis apjunkti su tos domenis
+				//tvarkanciomis funkcijomis
+					
+					res_str +='<span class="tinkama"> Netelpa </span>';
+					
+				} else {
+				
+					res_str +='<span class="per_maza"> Telpa</span>';				
+				}
+				/*if ( i == t_masinos ) {
+				
+					res_str +='<span class="tinkama">Maziausia</span>';					
+				}*/
+			 
+				res_str += '<br>'; 
+			}
+			rez = document.getElementById ( 'rezultatai' ); 
+			
+			rez.innerHTML = res_str;
+		}
+	 
+		function parodyti() {
+		
+			res_str = '';
+			
+			sar = document.getElementById ( 'sarasas' ); 
+						
+			for ( i = 0; i < lst_masina.length; i++ ) {
+						
+				masinos.push ( new Masina( lst_masina [ i ] ) ); 
+				
+				res_str += masinos[ i ].present() + '<br>';
+			}
+			sar.innerHTML = res_str;
+		}
+	</script>
+</head>
+<body>
+	
+	<div id="sarasas"> 
+	</div> 
+	<div id="tankis">
+		<h3>Kuro sanaudu vidurkis</h3> 
+		
+		<label for="vidurkis">vidurkis</label>
+		<input type="text" name="sanaudos_iki" id="sanaudos_iki" value="0">
+		
+		<input type="button" value="Istraukti" onClick="parodyti()"> 
+		<input type="button" value="Tikrinti" onClick="tikrinti()">
+	</div>
+	<div id="rezultatai">
+	</div>
+</body>
+</html>
