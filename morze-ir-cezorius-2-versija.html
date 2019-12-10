@@ -12,44 +12,55 @@
 		}
 		tekstas {
 		}
+		#tarp_res{
+			height: 100px;
+			background-color: yellow;
+		}
+		#res{
+			height: 100px;
+			width:1200px;
+			background-color: green;
+			word-wrap: break-word;
+		}
 	</style>
 	<script>
 		var 	
-			tarp_res = 0;
-			taskas = '&middot;', bruksnys = '&ndash;';
-			raides = [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',  
-				
+			sukeistas = [],
+			tekstas_res = [],
+			tarp_rez,
+			
+			raides = [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',	
 				'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
 				'.', ',', '?', "'", '!', '/', '(', ')', ' &', ':', ';', '=', '–', '_', '"', '$', '@'
-			];
+			],
 			morzes = [ '·-', '-···', '-·-·', '-··', '·', '··-·', '--·', '····', '··', '·---', '-·-', '·-··', '--', '-·', '---', '·--·', '--·-', '·-·', '···', '-', '··-', '···-', '·--', '-··-', '-·--', '--··', 
 				
 				'-----', '·----', '··---', '···--', '····-', '·····', '-····', '--···', '---··', '----·',
 				'·-·-·-', '--··--', '··--··', '·----·', '-·-·--', '-··-·', '-·--·', '-·--·-', '·-···', '---···', '-·-·-·', '-···-', '-····-', '··-- ·-', '·-··-·', '···-··-', '·--·-·'
-			];
+			],
 			/*
 				Trupmenos brūkšnelis (matematikoje)	-··-·                                       ! neužkoduota
 			*/
-			lt_raides = [ 'Ą', 'Č', 'Ę', 'Ė', 'Į', 'Š', 'Ų', 'Ū', 'Ž' ];
-			lot_raides = [ 'A', 'C', 'E', 'E', 'I', 'S', 'U', 'U', 'Z'  ];
+			lt_raides = [ 'Ą', 'Č', 'Ę', 'Ė', 'Į', 'Š', 'Ų', 'Ū', 'Ž' ],
+			lot_raides = [ 'A', 'C', 'E', 'E', 'I', 'S', 'U', 'U', 'Z'  ],
 			
 			nesukeisti  = [ ' ' , '\t', '\n' ];
 			
-		function sukeisti ( eilute, i )	 {
-		
-			return eilute.substr ( 0, i )  +  eilute [ i + 1 ] + eilute [ i ] + eilute.substr ( i +  2 );
-		}
 	
 		function sifruoti() {
 		
 			tekstas = document.getElementById ( 'tekstas' ).innerHTML;
-			tekstas_res = '';
+			tarp_res = document.getElementById ( 'tarp_res' );
+			res = document.getElementById ('res');
+
+
+			res_str = '';
 			
-			num_lt_simb = 0; lt_simb = [];
+			num_lt_simb = 0;
 			
-			/**
-			* šifravimas Cezario šifru
-			*/
+			
+			//šifravimas Cezario šifru
+			
 			iki = tekstas.length;
 			
 			if ( ( tekstas.length % 2 ) != 0 ) {
@@ -57,75 +68,93 @@
 				iki = tekstas.length - 1;
 			}
 			
-			i = 0;
-			while ( i< iki ) {
+			for ( i = 0; i< iki; i++) {
 			
 			           // console.log ( i + " " + tekstas [ i ]  + "~" + tekstas [ i + 1 ] + ": "+ ( ( tekstas [ i ]  != ' ' ) && ( tekstas [ i + 1 ] !=  ' ' ) ) );
-				   
-				if ( ( nesukeisti.indexOf ( tekstas [ i ] ) == - 1 )  ) { 
 			
-					if ( nesukeisti.indexOf ( tekstas [ i + 1 ] ) == -1 ) { 
-						
-						tekstas = sukeisti ( tekstas, i );
-					}
-					i += 2;
+				if ( ( nesukeisti.indexOf ( tekstas [ i ] ) == - 1 ) && ( nesukeisti.indexOf ( tekstas [ i + 1 ] ) == -1 ) ) { 
 					
-				} else  {
+					sukeistas [i] = tekstas [i+1];
+					sukeistas [i+1] = tekstas [i];
+					i++;
+					
+				} else {
 				
-					i += 1;
+					sukeistas [i] = tekstas [i];
 				}
+				
 			}
-			// tekstas_res = tekstas;
+			if ( ( tekstas.length % 2 ) != 0 ) {
+			
+				console.log ( 'iki: '  + iki );
+				console.log ( 'tekstas[iki] : '  + tekstas[iki] );				
+				sukeistas[iki] = tekstas[iki];
+				console.log ( 'sukeistas[iki] : '  + sukeistas[iki] );
+				iki++;
+				
+			}
+			for ( i = 0; i < iki; i++ ) {
+				tarp_res.innerHTML += sukeistas [i];
+				}
 			
 			/**
-			* šifravimas pagal morzės abėcėlę
-			* Miego trukumas kenkia praktiškai visoms organizmo funkcijoms.			
+			*  šifravimas pagal morzės abėcėlę
+			*  Miego trukumas kenkia praktiškai visoms organizmo funkcijoms.			
 			*/
-			for ( i = 0; i < tekstas.length; i++ ) {
+			for ( i = 0; i < iki; i++ ) {
 			
 				/**
 				* keitimas lietuviškų raidžių į lotyniškas ir jų visų kitų (lotyniškų) keitimas į didžiasias
 				*/				
-				if ( (  num_lot_raides = lt_raides.indexOf ( tekstas [ i ].toUpperCase() ) ) !==  -1 ) {
+				if (lt_raides.indexOf ( sukeistas [ i ].toUpperCase() ) !==  -1 ) {
 				
-					num_lt_simb++;
-					lt_simb.push ( tekstas [ i ] );
-					
-					simbolis = lot_raides [ num_lot_raides ];
-					
+					num_lt_simb = lt_raides.indexOf ( sukeistas [ i ].toUpperCase() );
+					sukeistas [i] = lot_raides[num_lt_simb].toUpperCase();
+				
 				} else {
 				
-					simbolis = tekstas [ i ].toUpperCase();
+					sukeistas [i] = sukeistas [ i ].toUpperCase();
 				}
+				res_str += sukeistas [i];
+			}
+			res_str += '<br>';
+				/*
+				keitimas į morzės abėcėlę
+				*/	
+				first_time = true;
+
 				
-				/**
-				* keitimas į morzės abėcėlę
-				*/				
-				if ( ( num_raides = raides.indexOf ( simbolis ) ) !== -1 ) {
+			for ( i = 0; i < iki; i++ ) {
+			
+				if ( raides.indexOf ( sukeistas [i]  ) !== -1 ) {
 				
-					morzes_simb = morzes [ num_raides ] + simbolis;
-					tekstas_res += morzes_simb + ' ';
+					tekstas_res[i] = morzes [ raides.indexOf ( sukeistas [i]  ) ];
+					res_str += tekstas_res [i] + ' ';
 					
 				} else {
 				
-					switch ( simbolis ) {
+					switch ( sukeistas [i] ) {
 						
-						case ' ': tekstas_res += '  '; break;
+						case ' ': tekstas_res[i] = ' ';  
+							res_str += tekstas_res [i];
+							break;
 						
-						case '\n': tekstas_res += '<br><br>'; break;
+						case '\n': tekstas_res[i] = '<br>'; 
+							res_str += tekstas_res [i];
+							break;
 						
 						default: 
 					
-							tekstas_res += simbolis;
+							tekstas_res [i] = sukeistas [i];
+							res_str += tekstas_res [i];
+			
 					}
+					
 				}
-
-				tarp_res = document.getElementById ( 'tarp_res' );
-				tarp_res.innerHTML = tekstas[i]; 
+				
 			} 
 			
-			res = document.getElementById ( 'res' );
-			res.innerHTML = 'num. lt. simb.: ' + num_lt_simb + ' surastos liet. raidės: ' + lt_simb.join ( ', ' ) + '<br>' + tekstas_res;
+			res.innerHTML = '<pre>' + res_str + '</pre>'; 
 		}
 	</script>
 </head>
@@ -139,9 +168,10 @@ Mokslininkai pakvietė 138 žmones dalyvauti tyrime. 77 nemiegojo visą naktį, 
 Skaitykite daugiau: https://www.delfi.lt/mokslas/mokslas/miego-trukumas-mus-veikia-zymiai-labiau-nei-manyta-siandien-gulkites-anksciau.d?id=82944441-->
 	</div>
 	<input type="button" id="vykdyti" value="keisti" onClick="sifruoti()">
-	<div id="res">
-	</div>
 	<div id="tarp_res">
 	</div>
+	<div id="res" >
+	</div>
+
 </body>
 </html>

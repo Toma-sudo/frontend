@@ -31,7 +31,7 @@
 			iki,
 			raides_simb,
 		
-			raides = [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',  
+			raides = [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',  
 				
 				'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
 				'.', ',', '?', "'", '!', '/', '(', ')', ' &', ':', ';', '=', '–', '_', '"', '$', '@'
@@ -45,38 +45,45 @@
 				Trupmenos brūkšnelis (matematikoje)	-··-·                                       ! neužkoduota
 			*/
 			
-			nesukeisti  = [ ' ' , '\t', '\n' ];		
+			nesukeisti  = [ ' ' , '\t', '\n' ];
+			tekstas = document.getElementById ( 'tekstas' ).innerHTML;
+			tarp_res = document.getElementById ( 'tarp_res' );
+			res = document.getElementById ('res');			
 		
 		
 		function morzes_raidziu_skaicius( tekstas ) {
 		
-			var	viso_morzes_raidziu = 0;
-				nuo = 0;
+			var	viso_morzes_raidziu = 0,
+				y = 0;
 			
 			for ( i = 0; i < tekstas.length; i++ ) {
 						
-				if ( tekstas [ i ] == " "  ) {
+				if ( tekstas [ i ] == " " && tekstas [i + 1] != " " ) {
 				
 					viso_morzes_raidziu += 1;
-					morzes_raide.push ( tekstas.substr ( nuo, i - nuo ) );
-					nuo = i + 1;
-				}
-			}
-			morzes_raide.push ( tekstas.substr ( nuo ) );
-			viso_morzes_raidziu +=1;		
+					tarp_res.innerHTML += morzes_raide[y] + ' ';
+					y++;
+
+					
+				} else {
+				morzes_raide[y] += tekstas [i];
+			}}
+		
+			viso_morzes_raidziu +=1;	
+			
 			return viso_morzes_raidziu;
 		}	
 	
 		function sifruoti() {
-		
-			tekstas = document.getElementById ( 'tekstas' ).innerHTML;
-			tarp_res = document.getElementById ( 'tarp_res' );
-			res = document.getElementById ('res');
+			
+
 
 			/**
 			* šifravimas Cezario šifru
 			*/
 			tarp_res.innerHTML +=  'viso morzės raidžių: ' + morzes_raidziu_skaicius( tekstas );
+		
+			
 			if ( ( morzes_raidziu_skaicius( tekstas ) % 2 ) != 0 ) {
 			
 				iki = morzes_raidziu_skaicius( tekstas ) - 1;
@@ -148,7 +155,7 @@
 	<h3>Teksto šifravimas ir keitimas pagal morzes abėcėlę</h3>
 	<div id="forma">
 	<label for="tekstas">Keičiamas tekstas</label>
-	<textarea id="tekstas" rows="30" cols="100">·· -- --· · ---  --·- ··· -·- - -- - ·-· ·-  -·- -· · ·· -·- ·-  --·- ·--· -·- ·- ·· ··· -·- ·-· ·· ·-  ··- ·-· ·· -- --- ·-·  --·- --- ·- --· ·· -· -- -·-- ---  - ··-· -·- -· ·· -·-· --- ·--- ·-· -- ----·</textarea>
+	<textarea id="tekstas" rows="30" cols="100">·· -- --· · ---  ·-· - -·- ··- -- ··- ··· ·-  · -·- -·- -· ·- ··  ·-· ·--· -·- ·- ·· - -·- ··· ·· ·-  ·· ···- --- ··· ··· --  ·-· --- ·- --· ·· -· -- --·· ---  ··- ··-· -·- -· ·· -·-· --- ·--- ··· -- ·-·-·-</textarea>
 	</div>
 	<input type="button" id="vykdyti" value="keisti" onClick="sifruoti()">
 	<div id="tarp_res">
