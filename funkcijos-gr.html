@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf8">
+		<title>funkcijos grafikas</title>
+		<style>
+			label, input {
+				display: block;
+				width: 100%;
+			}
+			label, input[type="button"] {
+				margin-top: 12px;			
+			}
+			table {
+				border-collapse: collapse;
+			}
+			td, th {
+				border: 1px solid black;
+				padding: 5px;
+			}
+			#funkcijos_grafikas {
+			
+				border: 1px solid black;			
+			}
+		</style>
+		<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+		<script>
+
+			$( document ).ready(  function() {
+			
+			
+				function reiksmes_intervale ( funkcija, x_prad, x_gal, sk_reiksmiu ) {
+				
+					funkcijos_reiksmes = [];
+					
+					hx = ( x_gal - x_prad ) / ( sk_reiksmiu - 1 ) ;
+					
+					x = x_prad;
+
+					for ( i = 0;  i < sk_reiksmiu;  i++) {
+					
+						funkcijos_reiksmes.push ( {  x: x, y:  eval ( funkcija ) } ); 
+				
+						x += hx;
+					}
+					return funkcijos_reiksmes;
+				}
+				
+				function funkcijos_reiksmiu_lentele ( funkcijos_reiksmes ) {
+				
+					lentele = '<table><tr><th>x</th><th>y</th></tr>';
+
+					for ( i= 0; i < funkcijos_reiksmes.length; i++ ) {
+					
+						lentele += '<tr><td>' + funkcijos_reiksmes [ i ].x + '</td><td>' + funkcijos_reiksmes [ i ].y + '</td>';
+					}
+					lentele += '</table>';
+					
+					return lentele;
+				}	
+
+
+				function nupiesti ( funkcijos_reiksmes  ) {
+				
+					var c = document.getElementById( 'funkcijos_grafikas' );
+					var ctx = c.getContext( '2d' );
+					ctx.moveTo (0, 0);
+					// ctx.lineTo ( 200, 100 );
+					// ctx.stroke();	
+
+					max = funkcijos_reiksmes [ 0 ].y;
+					min = funkcijos_reiksmes [ 0 ].y;
+					
+					for ( i = 0;  i <  funkcijos_reiksmes.length; i++ ) {
+					
+						if ( min >= funkcijos_reiksmes [ i ].y ) {
+						
+							min =  funkcijos_reiksmes [ i ].y;
+						}
+						
+						if ( max <= funkcijos_reiksmes [ i ].y ) {
+						
+							max =  funkcijos_reiksmes [ i ].y;
+						}						
+					}
+					
+					ribos = max - min;
+					
+					for ( i = 0;  i <  funkcijos_reiksmes.length; i++ ) {
+
+						y_grafike =  500 - ( ( funkcijos_reiksmes [ i ].y - min ) / ribos ) * 500;
+						ctx.lineTo ( i, parseInt ( y_grafike ) );
+	
+					}
+					ctx.stroke();
+				}
+
+			
+				$( '#skaiciuoti' ).click ( function() {
+				
+					funkcija = $( '#funkcija' ).val();
+
+					prad_re = parseFloat ( $( '#prad_reiksme' ).val() );
+					
+					gal_re = parseFloat ( $( '#gal_reiksme' ).val() );
+					
+					funkc_reiks = reiksmes_intervale ( funkcija, prad_re, gal_re, 20 );
+					
+					console.log ( funkc_reiks );
+					
+					$( '#funkcijos_reiksmes' ).html(  funkcijos_reiksmiu_lentele ( funkc_reiks ) );
+					
+					funkc_reiks_gr = reiksmes_intervale ( funkcija, prad_re, gal_re, 500 );
+					
+					nupiesti ( funkc_reiks_gr );
+					/*
+					F= 0;
+					
+					eval ( 'F=' + funkcija  + ';'  );
+	
+					
+					$( '#funkcijos_reiksmes' ).html( F );
+					console.log(' funkcija F='  +F  );
+					console.log( 'argumento ' + x + ' pradine reiksme: ' + x);
+					*/
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="dialogas">
+			<label for="funkcija">Funkcija F(x)=?</label>
+			<input type="text" id="funkcija" value="x*5">
+			<label for="prad_reiksme">Argumento x pradinė reikšmė?</label>
+			<input type="text" id="prad_reiksme" value="2">		
+			<label for="gal_re">Argumento x galutinė reikšmė?</label>
+			<input type="text" id="gal_reiksme" value="8">
+			<input type="button" id="skaiciuoti" value="skaiciuoti">
+		</div>
+		<div id="funkcijos_reiksmes">
+		</div>
+		<canvas id="funkcijos_grafikas" width="500" height="500">
+		</canvas>
+	</body>
+</html>

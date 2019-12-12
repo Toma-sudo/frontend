@@ -1,0 +1,304 @@
+<!DOCTYPE<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Knygos</title>
+	<style>
+		#sarasas {
+			float: left;
+			text-align: left;
+			border: 1px solid black;
+			margins: 10px;
+			padding: 10px;
+			width:400px;
+			height:50px;
+			background-color:pink;
+			position: relative;
+		}
+		
+		h1 {
+			color: blue;
+			width: 100%;
+			font-size: 200%;
+			text-align: center;
+			
+		}
+		h2 {
+			color: red;
+			width: 100%;
+			font-size: 150%;
+			text-align: center;
+			
+		}
+		
+		#funkcijos {
+			width: 500px;
+			margin: 10px;
+			padding: 10px;
+			font-size: 150%;
+			float: left;
+		}
+		#funkcijos input {
+			position: relative;
+			width: 200px;
+			padding: 5px;
+			
+		}
+		#funkcijos label {
+			display: inline-block;
+			width: 250px;
+		}
+		label[for=psl_sk_nuo] {
+			color: red;
+		}
+		label[for=psl_sk_iki] {
+			color: blue;
+		}
+		#rezultatai {
+			float: left;
+			text-align: left;
+			border: 1px solid black;
+			margins: 10px;
+			padding: 10px;
+			width:400px;
+			height:300px;
+			background-color:green;
+
+		}
+		#surikiuoti_rez {
+			float: left;
+			text-align: left;
+			border: 1px solid black;
+			margins: 10px;
+			padding: 10px;
+			width:400px;
+			background-color:yellow;
+			}
+			
+		#penki_artimiausi {
+			float: left;
+			text-align: left;
+			border: 1px solid black;
+			margins: 10px;
+			padding: 10px;
+			width:400px;
+			height:300px;
+			background-color:lightblue;
+			}
+	
+	</style>
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+	<script src="knygu_sarasas.js"></script>
+	<script src="knyga.class.js"></script>
+	<script>
+	
+		$( document ).ready ( function() {  
+		
+			knygos = [];
+			vidurkis = 0;
+			puslapiu_sk =0;
+			maziausias_skirtumas = 0;
+			surik_art_knygos = '';
+			
+			$( '#sarasas' ).hide();
+			$( '#rezultatai' ).hide();
+			$( '#surikiuoti_rez' ).hide();
+			
+
+			$( '#parodyti' ).click ( function () {
+			
+				res_str = '';
+				
+				sar = $( '#sarasas' ); 
+							
+				for ( i = 0; i < lst_knygos.length; i++ ) {
+							
+					knygos.push ( new Knyga ( lst_knygos [ i ] ) ); 
+					
+					res_str += knygos[ i ].present() + '<br>';
+				}
+				
+				// alert ( JSON.stringify ( document.getElementById( 'rezultatai' ).style ) );   --- ??
+				
+				sar.html ( res_str );
+				$( '#sarasas' ).show();
+				$( '#sarasas' ).animate( { height: "500px" }, 2000 );
+			});
+			
+			$( '#psl_vid' ).click ( function () {
+			
+				var 	psl_suma = 0,
+					knygu_kiekis = 0;
+					
+				for ( i = 0; i < knygos.length; i++) {
+				
+					psl_suma += knygos [ i ].psl_skaicius;
+					knygu_kiekis ++;
+				}
+				vidurkis = psl_suma / knygu_kiekis;
+				sar.html ( sar.html() +  '<br>Vidurkis: ' + vidurkis.toFixed (2) );
+			});
+			
+			$( '#tikrinti' ).click ( function () {
+			
+			
+				nr_tinkamu_knygu = [];
+				/**
+				* duomenu įvedimas
+				*/		
+		  
+				puslapiai_nuo = parseInt ( $(  '#psl_nuo' ).val() );			//priskiriama reiksme
+				puslapiai_iki = parseInt ( $ ( '#psl_iki' ).val() );	
+				
+				//skaičiavimai
+							
+				flag_pasiimti_min = true;
+				
+				t_knygos = -1; // reiksme -1 uztikrina kad parrenkant dezes, tokios nebus , tai bus mums tinkama deze
+			
+				for ( i = 0; i < knygos.length; i++ ) {
+				
+					if ( knygos[ i ].ar_intervale (puslapiai_nuo, puslapiai_iki)){
+
+						nr_tinkamu_knygu. push ( i );
+					}
+				}
+
+				 //rezultatu pateikimas 
+				
+				res_str = 'Puslapiai nuo: ' + puslapiai_nuo + ', puslapiai iki: ' + puslapiai_iki + '<br>';
+				
+				for ( i = 0; i < knygos.length; i++ ) {
+
+					if ( nr_tinkamu_knygu.indexOf ( i ) != -1  ) { 	// nr_tinkamu_knygu.indexOf istraukia is  [ i ] !=-1; kuri  reiskia duoto skaiciaus pozicijas masyve
+											 // simboliu masyvas, duotu simboliu eilute.. masyvas globaliai aprasytas, naudojamas virs fukction .
+											//   indexOf yra metodas . funkcija priklausanti objektui vadinama  metodu 
+											//, java ir javascripte masyvas yra objektas. objektas yra domenis apjunkti su tos domenis tvarkanciomis funkcijomis
+						
+						res_str += '"' + knygos[i].pav + '" ' + knygos[i].psl_skaicius + '<span class="tinkama"> Telpa </span>';
+						
+					} else {
+					
+						res_str += '"' + knygos[i].pav + '"' + knygos[i].psl_skaicius + '<span class="per_maza"> Netelpa</span>';				
+					}
+					
+					if ( i == t_knygos ) {
+					
+						res_str += '"' + knygos[i].pav + '"' + knygos[i].psl_skaicius + '<span class="tinkama">daugiau</span>';					
+					}
+					res_str += '<br>'; 
+				}
+				$ ( '#rezultatai' ).html ( res_str );
+				$( '#rezultatai' ).show();
+			});
+			
+			$( '#rikiuoti' ).click ( function () {
+			
+				surik_knygos ='';
+				netvarka = true;
+				
+				art_knygos_nr = 0;
+				/**
+				* duomenu įvedimas
+				*/		
+		  
+				puslapiu_sk = parseInt ( $(  '#psl_sk' ).val() );
+				surik_knygos += 'Įvestas puslapių skaičius ' + puslapiu_sk;		
+							//priskiriama reiksme
+				
+				//rikiuoti
+
+				while (netvarka) {
+					netvarka = false;
+					for (i = 0; i < knygos.length - 1; i++ ){
+						if ( knygos[ i ].psl_skaicius < knygos[ i+1 ].psl_skaicius ) {
+							tarp = knygos[i];
+							knygos[i] = knygos[i+1];
+							knygos[i+1] = tarp;
+							netvarka = true;
+						}
+					}
+				}
+				maziausias_skirtumas = Math.abs(knygos[0].psl_skaicius - puslapiu_sk);	
+				
+				for ( i = 1; i < knygos.length; i++ ) {
+					skirtumas = knygos[i].skirtum();
+					if (skirtumas < maziausias_skirtumas) {
+						maziausias_skirtumas = skirtumas;
+						art_knygos_nr = i;
+					}
+				}
+				surik_knygos += '. <br> Artimiausia knyga: ' + knygos[art_knygos_nr].present() + '<br>' + 'Surikiuotų knygų sąrašas: ';
+				for ( i =0; i < knygos.length; i++ ){	
+					surik_knygos += knygos[i].present();							
+				}
+				 //rezultatu pateikimas 
+				
+				$ ( '#surikiuoti_rez' ).html ( $ ( '#surikiuoti_rez' ).html() + surik_knygos );
+				$( '#surikiuoti_rez' ).show();
+				
+				penkios_artimiausios();
+			});
+			
+			function penkios_artimiausios () {
+			
+				surik_art_knygos = 'Penkios artimiausios pagal psl. skaičių: <br>'
+				netvarka = true;
+				
+				while (netvarka) {
+				
+					netvarka = false;
+					
+					for (i = 0; i < knygos.length - 1; i++ ) {
+					
+						if ( knygos[ i ].skirtum() > knygos[ i+1 ].skirtum() ) {
+						
+							pereina = knygos[i];
+							knygos[i] = knygos[i+1];
+							knygos[i+1] = pereina;
+							netvarka = true;
+						}
+					}
+				}	
+				
+				for ( i =0; i <5; i++ ){	
+				
+					surik_art_knygos += knygos[i].present();							
+				}
+				$ ('#penki_artimiausi' ).html (surik_art_knygos);			
+			}
+		});
+	</script>
+</head>
+<body>
+	<h1>Knygų sąrašas</h1>
+
+	<div id="sarasas">
+		
+	</div> 	
+	<div id="funkcijos">
+		
+		<label for="psl_sk_nuo" >Puslapių skaičius nuo </label>
+		<input type="text" name="Nuo" id="psl_nuo" value="0">
+		<label for="psl_sk_iki">Puslapių skaičius iki </label>
+		<input type="text" name="Iki" id="psl_iki" value="0">
+		<label for="psl_sk_nuo" >Įveskite puslapių skaičių </label>
+		<input type="text" name="Nuo" id="psl_sk" value="0">
+		<input type="button" id="parodyti" value="Parodyti"> 
+		<input type="button" id="psl_vid" value="Puslapių vidurkis">	
+		<input type="button" id="tikrinti" value="Tikrinti">
+		<input type="button" id="rikiuoti" value="Rikiuoti">
+	</div>	
+	<div id="rezultatai">
+	
+	</div>	
+	<div id="surikiuoti_rez">
+	<h2>Surikiuotos knygos</h2>
+	
+	</div>
+	<div id="penki_artimiausi">
+	
+	</div>
+
+</body>
+</html>
