@@ -1,0 +1,7 @@
+	
+	var lst_automobiliu = [
+	
+		{ pav: 'Automobilis1', greitis: 0, laikas: 0 } ,
+		{ pav: 'Automobilis2', greitis: 0, laikas: 0 } ,
+
+	]; 

@@ -1,0 +1,24 @@
+
+	class Automobilis {  //klasse
+		
+		constructor(automobilis) {  //parametrai
+ 
+		 	// parametrai vadinami savybemis ir priskiriama this
+			this.pav = automobilis.pav;
+			this.greitis = automobilis.greitis;
+			this.laikas = automobilis.laikas;
+		}
+		
+		atstumas() {  			//metodai - taip vadinamos funkcijos priklausancios klasei
+							// metodai dirba su savybemis per kreipini this. savybes bendros visems metodams 
+			
+			return 'Nuvaiuotas atstumas: ' + this.greitis * this.laikas + '<br>';    //return apraso ka turi grazint ir kaip veikt ir parodo front ende
+		}
+		
+		bendras_atstumas(){
+		
+		return 'Bendras atstumas: ' + (bendras_atstumas += atstumas);
+		}
+		
+
+	} 

@@ -1,0 +1,122 @@
+<!DOCTYPE<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>miestai</title>
+	<style>
+		h2 {
+			color: blue;
+		}
+		.tinkama {
+			color: brown;
+		}
+		.per_maza {
+		
+			color: green;
+		}
+		#tankis {
+		
+			border: 3px solid black;
+			width: 250px;
+			padding: 20px;
+		}
+		#tankis input {
+		
+			width: 95%;
+			margin: 2px 5px;
+		}
+			#sarasas {
+			text-align: left;
+			border: 1px solid black;
+			padding: 7px;
+		}
+			#rezultatai {
+			border: 1px solid black;
+		}
+	</style>
+	<script src="Automobiliai_sarasas.js"></script>
+	<script src="Automobiliai.class.js"></script>
+	<script>
+	
+		automobiliai = [];
+		i = 0;
+		laikas = 0;
+		res_str ='';
+		
+		
+		function pridetiAutomobili() {
+		
+			i++;
+		
+			automobiliai.push ( 
+			
+				new Automobilis (
+					{ 
+						pav: 'Automobilis' + i, 
+						greitis: parseInt ( document.getElementById ( 'auto_greitis' ).value ) 
+					} 
+				)
+			);		
+		}
+		
+		
+		
+		
+		
+		function itrauktiTipini( nr ) {
+		
+			automobiliai.push (new Automobilis ( lst_automobiliu [ nr ] ) );
+			i++;
+		}
+		
+		function pateiktiTipinius() {
+		
+			sar_tipiniu = '<h2>Tipinių automobilių sąrašas</h2><table><tr><th>Pavadinimas</th><th>Greitis</th><th>Veiksmas</th></tr>';
+		
+			for ( j = 0; j < lst_automobiliu.length; j++ ) {
+		
+				sar_tipiniu += '<tr><th>' + lst_automobiliu [ j ].pav 
+							+ '</th><th>' + lst_automobiliu [ j ].greitis 
+							+ '</th><th><input type="button"  value="Įtraukti" onClick="itrauktiTipini(' + j + ')"></th></tr>';
+		
+			}
+			sar_tipiniu += '</table>';		
+			tipiniai = document.getElementById ( 'tipiniai' );
+			tipiniai.innerHTML = sar_tipiniu;
+		}
+		function pateiktiLaika(){
+			
+			pateiktasLaikas = parseInt ( document.getElementById ( 'auto_laikas' ).value )
+			for (y = 0; y < automobiliai.length; y++){
+				
+				res_str += automobiliai[y].pav + automobiliai[y].atstumas(pateiktasLaikas) + '<br>';
+				
+			
+			rez = document.getElementById ( 'rezultatai' ); 
+			
+			rez.innerHTML = res_str;
+			}
+		} 
+	</script>
+</head>
+<body>
+	<div id="tipiniai">
+	<input type="button" value="pateikti tipinius" onClick="pateiktiTipinius()">
+	</div>
+	
+	<div id="naujas_auto">
+		<h2>Įtraukti naują automobilį</h2> 
+		<label for="auto_gr">Automobilio greitis:</label>
+		<input type="text" name="Auto greitis" id="auto_greitis" value="0">
+		<input type="button" value="Įtraukti naują" onClick="pridetiAutomobili()">
+	</div>
+	<div id="laikas">	
+		<h2>Įtraukti laiką</h2> 
+		<label for="ivesk_laika">Pateikite laiką:</label>	
+		<input type="text" name="Auto laikas" id="auto_laikas" value="0">
+		<input type="button" value="Įtraukti laiką" onClick="pateiktiLaika()">
+	</div>
+	<div id="rezultatai">
+	</div>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Fantastinis augalas</title>
+	<style>  
+		#sarasas {
+			float: left;
+			text-align: left;
+			border: 1px solid black;
+			margins: 10px;
+			padding: 10px;
+			width:400px;
+			height:50px;
+			background-color:pink;
+			position: relative;
+		}
+		
+		h1 {
+			color: blue;
+			width: 100%;
+			font-size: 200%;
+			text-align: center;
+			
+		}
+		
+		#funkcijos {
+			width: 500px;
+			margin: 10px;
+			padding: 10px;
+			font-size: 150%;
+			float: left;
+		}
+		#funkcijos input {
+			position: relative;
+			width: 200px;
+			padding: 5px;
+			
+		}
+		#funkcijos label {
+			display: inline-block;
+			width: 500px;
+		}
+		label[for=seklos2metais] {
+			color: red;
+		}
+		label[for=metuskaicius] {
+			color: red;
+		}
+		label[for=seklos4metais] {
+			color: blue;
+		}
+		label[for=pradinesseklos] {
+			color: blue;
+		}
+
+		#surikiuoti_rez {
+			float: left;
+			text-align: left;
+			border: 1px solid black;
+			margins: 10px;
+			padding: 10px;
+			width:400px;
+			background-color:yellow;
+			}
+	
+	</style>
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+	<script src="knygu_sarasas.js"></script>
+	<script src="knyga.class.js"></script>
+	<script>
+	
+		$( document ).ready ( function() {  
+		
+			res_str = '';
+
+			$( '#surikiuoti_rez' ).hide();
+			
+			
+			$( '#tikrinti' ).click ( function () {
+			
+			
+				naujos_seklos = [];
+				metuseklos4 = [];
+				metuseklos2 = [];
+				
+	
+				
+				//duomenu įvedimas
+		  
+				k = parseInt ( $( '#2_m' ).val() );	//Kiek sėklų subrandins po 2 metų
+				t = parseInt ( $( '#4_m' ).val() );	//Kiek sėklų subrandins po 4 metų
+				n = parseInt ( $( '#n_m' ).val() );		//Įveskite metų skaičių n
+				s = parseInt ( $( '#pr_sk' ).val() );	//Įveskite pradinį sėklų skaičių
+				
+				viso_augalu = s;
+				
+				metuseklos4 [0] = 0;
+				metuseklos2 [0] = 0;
+				metuseklos4 [1] = 0;
+				metuseklos2 [1] = 0;			
+				//skaičiavimai
+				
+				naujos_seklos [0] = s;
+				naujos_seklos [1] = s;
+			
+				for ( i = 2; i <= n; i++ ) {
+				
+					if ( i % 4 == 0) { 
+						if (i == 4){
+							metuseklos4 [i] = naujos_seklos [i-4] * t;
+						}
+						else { metuseklos4 [i] = metuseklos4 [i-4] * t;
+						}			
+					}
+					else { metuseklos4 [i] = 0;
+					}
+					if ( i % 2 == 0 ) {
+						if (i == 2){
+							metuseklos2 [i] = naujos_seklos [i-2] * k;
+						}
+						else { 
+							metuseklos2 [i] = metuseklos2 [i-2] * k + metuseklos4 [i-2] * k;
+							if (i>=6) { metuseklos4 [i] = metuseklos2 [i-4]*t + metuseklos4 [i-4]*t; 
+							}
+						}
+											
+					} else { metuseklos2 [i] = 0;
+					}
+					naujos_seklos [i] = metuseklos2 [i] + metuseklos4 [i] + naujos_seklos [i-1];
+					
+					if (i == 5) {
+					
+						naujos_seklos [i] = naujos_seklos [i-1] - naujos_seklos [i-5] - metuseklos2 [i-5] - metuseklos4 [i-5];
+
+					}
+					if (i > 5) {naujos_seklos [i] = naujos_seklos [i] - metuseklos2 [i-5] - metuseklos4 [i-5];
+					}
+				
+				}
+				
+				 //rezultatu pateikimas 
+				res_str = metuseklos4 + '<br>' + metuseklos2 + '<br>' + naujos_seklos + '<br>';
+				res_str += 'Medziu bus: ' + naujos_seklos[n];
+				
+				
+			$ ( '#surikiuoti_rez' ).html ( res_str);
+			$( '#surikiuoti_rez' ).show();
+
+			});
+			
+				
+		
+		});
+	</script>
+</head>
+<body>
+	<h1>Fantastinės planetos augalai</h1>
+	
+	<div id="funkcijos">
+		
+		<label for="seklos2metais" >Kiek sėklų subrandins po 2 metų k = </label>
+		<input type="text" name="po2metu" id="2_m" value="2">
+		<label for="seklos4metais">Kiek sėklų subrandins po 4 metų t = </label>
+		<input type="text" name="po4metu" id="4_m" value="2">
+		<label for="metuskaicius" >Įveskite metų skaičių n = </label>
+		<input type="text" name="ponmetu" id="n_m" value="5">
+		<label for="pradinesseklos" >Įveskite pradinį sėklų skaičių s = </label>
+		<input type="text" name="pradskaicius" id="pr_sk" value="1">
+		<input type="button" id="tikrinti" value="Tikrinti">
+	
+	</div>	
+	
+
+	<div id="surikiuoti_rez">
+	
+	
+	</div>
+
+</body>
+</html>

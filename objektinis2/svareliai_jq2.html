@@ -1,0 +1,184 @@
+<!DOCTYPE<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Knygos</title>
+	<style>
+		h1 {
+			color: blue;
+			width: 100%;
+			font-size: 200%;
+			text-align: center;
+		}
+		input {
+			position: relative;
+			width: 200px;
+			padding: 5px;
+		}
+		#sarasas {
+			float: left;
+			text-align: left;
+			border: 1px solid black;
+			margins: 10px;
+			padding: 10px;
+			width:400px;
+			height:50px;
+			background-color:pink;
+			position: relative;
+		}
+		#funkcijos {
+			width: 500px;
+			margin: 10px;
+			padding: 10px;
+			font-size: 150%;
+			float: left;
+		}
+		label {
+			display: inline-block;
+			width: 250px;
+		}
+		h2 {
+			color: red;
+			width: 100%;
+			font-size: 150%;
+			text-align: center;
+		}
+		#rezultatai {
+			float: left;
+			text-align: left;
+			border: 1px solid black;
+			margins: 10px;
+			padding: 10px;
+			width:400px;
+			height:300px;
+			background-color:green;
+
+		}
+			
+	</style>
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+	<script>
+	
+		$( document ).ready ( function() {  
+		
+			svareliu_sarasas = [0, 1, 3, 9, 27]; 
+			
+			$( '#sarasas' ).hide();
+			$( '#rezultatai' ).hide();
+	
+			
+
+			$( '#parodyti' ).click ( function () {
+			
+				res_str = '';
+				sar = $( '#sarasas' ); 
+							
+				for ( i = 1; i < svareliu_sarasas.length; i++ ) {
+							
+					res_str += svareliu_sarasas[ i ] + 'kg ';
+				}
+				
+				sar.html ( res_str );
+				$( '#sarasas' ).show();
+				$( '#sarasas' ).animate( { height: "100px" }, 2000 );
+				
+			});
+			
+			
+			$( '#tikrinti' ).click ( function () {
+			
+			
+				kaire_lekste = [];
+				desine_lekste = [];
+				suminis_svoris = 0;
+				res = '';
+	
+				ivestas_svoris = parseInt ( $(  '#svoris' ).val() );			//priskiriama reiksme
+				
+				if (ivestas_svoris > svareliu_sarasas[svareliu_sarasas.length-1]) 
+				
+				//skaičiavimai
+						
+				for ( x = 1; x < svareliu_sarasas.length; x++ ) {
+					kaire_lekste = svareliu_sarasas [x];
+					desine_lekste = 0; 
+					for (k = x - 1; k >0; k--){
+							desine_lekste = svareliu_sarasas [k];
+							suminis_svoris = kaire_lekste - desine_lekste;
+							res += 'Kaire lekste ' + kaire_lekste + ' Desine lekste ' + desine_lekste + ' Suminis svoris: ' + suminis_svoris + '<br>' ;
+						}
+					for (y = 0; y < x; y++){
+						kaire_lekste = svareliu_sarasas [x] + svareliu_sarasas [y];
+						desine_lekste = 0;
+						for (m = y - 1; m >0; m--){
+							desine_lekste = svareliu_sarasas [m];
+							suminis_svoris = kaire_lekste - desine_lekste;
+							res += 'Kaire lekste ' + kaire_lekste + ' Desine lekste ' + desine_lekste + ' Suminis svoris: ' + suminis_svoris + '<br>' ;
+						}*/
+						for (z = 0; z < y; z++){
+							kaire_lekste = svareliu_sarasas [x] + svareliu_sarasas [y] + svareliu_sarasas [z];
+					
+							/*for (n = z - 1; n >0; n--){
+								desine_lekste = svareliu_sarasas [m] + svareliu_sarasas [n] ;
+								suminis_svoris = kaire_lekste - desine_lekste;
+								res += 'Kaire lekste ' + kaire_lekste + ' Desine lekste ' + desine_lekste + ' Suminis svoris: ' + suminis_svoris + '<br>' ;
+							}
+					*/
+							for ( i = 0; i < z; i++){
+								kaire_lekste = svareliu_sarasas [x] + svareliu_sarasas [y] + svareliu_sarasas [z] + svareliu_sarasas [i];
+								/*desine_lekste = 0;
+								suminis_svoris = kaire_lekste - desine_lekste;
+								res += 'Kaire lekste ' + kaire_lekste + ' Desine lekste ' + desine_lekste + ' Suminis svoris: ' + suminis_svoris + '<br>' ;
+								
+								*/
+								res += 'Kaire lekste ' + kaire_lekste + ' Desine lekste ' + desine_lekste + ' Suminis svoris: ' + suminis_svoris + '<br>' ;
+							}
+
+						res += 'Kaire lekste ' + kaire_lekste + ' Desine lekste ' + desine_lekste + ' Suminis svoris: ' + suminis_svoris + '<br>' ;
+
+												
+						}
+					res += 'Kaire lekste ' + kaire_lekste + ' Desine lekste ' + desine_lekste + ' Suminis svoris: ' + suminis_svoris + '<br>' ;
+					}
+					res += 'Kaire lekste ' + kaire_lekste + ' Desine lekste ' + desine_lekste + ' Suminis svoris: ' + suminis_svoris + '<br>' ;
+					
+								
+					//res += 'Kairė lėkštė: ' + kaire_lekste + ', dešinė lėkštė: ' + desine_lekste + '<br>' 
+					
+				}
+				
+
+				 //rezultatu pateikimas 
+
+				
+				$ ( '#rezultatai' ).html ( res );
+				$( '#rezultatai' ).show();
+			});
+			
+		
+		});
+	</script>
+</head>
+<body>
+	<h1>Turimų svarelių sąrašas</h1>
+	<input type="button" id="parodyti" value="Parodyti"> 
+	<div id="sarasas">
+			<input type="button" id="parodyti" value="Parodyti"> 
+	</div> 	
+	<div id="funkcijos">
+		
+		<label for="Iveskite_svori" >Įveskite svorį  nuo 1kg iki 40kg </label>
+		<input type="text" name="Ivestas_svor" id="ivestas_svoris" value="0">
+		
+		<input type="button" id="tikrinti" value="Tikrinti"> 
+
+	</div>	
+	<h2>Svarelių dėjimo tvarka</h2>
+	<div id="rezultatai">
+	
+	</div>	
+
+
+</body>
+</html>
