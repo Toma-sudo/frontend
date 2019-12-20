@@ -7,66 +7,72 @@
 		h2 {
 			color: blue;
 		}
-		.tinkama {
-			color: brown;
-		}
-		.per_maza {
-		
-			color: green;
-		}
-		#tankis {
-		
-			border: 3px solid black;
+
+		#AutoLentele {
+			border: 1px solid black;
 			width: 250px;
-			padding: 20px;
+			padding: 10px;
+			margin: 10px;
 		}
-		#tankis input {
-		
-			width: 95%;
-			margin: 2px 5px;
+		#naujas_auto {
 		}
-			#sarasas {
+		#atstumas {
+		}
+		#laikas {
+		}
+		#tarp_rezultatai{
+			border: 1px solid black;
 			text-align: left;
-			border: 1px solid black;
 			padding: 7px;
+			margin: 7px;
+			width: 50%;
 		}
-			#rezultatai {
+		#rezultatai {
 			border: 1px solid black;
+			text-align: left;
+			padding: 7px;
+			margin: 7px;
+			width: 50%;
 		}
+	
+
 	</style>
 	<script src="Automobiliai_sarasas.js"></script>
 	<script src="Automobiliai.class.js"></script>
+	<script src="Chart.class.js"></script>	
 	<script>
 	
 		automobiliai = [];
+		z = 0;
 		i = 0;
 		laikas = 0;
-		res_str ='';
-		
-		
+		s = 0;
+		t = 0;
+		auto_lentele = '';
+				
 		function pridetiAutomobili() {
 		
-			i++;
+			z++;
 		
 			automobiliai.push ( 
 			
 				new Automobilis (
 					{ 
-						pav: 'Automobilis' + i, 
+						pav: 'Automobilis' + z, 
 						greitis: parseInt ( document.getElementById ( 'auto_greitis' ).value ) 
 					} 
 				)
-			);		
+			);
+			automobiliuLentele();
+			i++;
 		}
-		
-		
-		
-		
 		
 		function itrauktiTipini( nr ) {
 		
 			automobiliai.push (new Automobilis ( lst_automobiliu [ nr ] ) );
+			automobiliuLentele();
 			i++;
+			z++;
 		}
 		
 		function pateiktiTipinius() {
@@ -74,49 +80,131 @@
 			sar_tipiniu = '<h2>Tipinių automobilių sąrašas</h2><table><tr><th>Pavadinimas</th><th>Greitis</th><th>Veiksmas</th></tr>';
 		
 			for ( j = 0; j < lst_automobiliu.length; j++ ) {
-		
-				sar_tipiniu += '<tr><th>' + lst_automobiliu [ j ].pav 
-							+ '</th><th>' + lst_automobiliu [ j ].greitis 
-							+ '</th><th><input type="button"  value="Įtraukti" onClick="itrauktiTipini(' + j + ')"></th></tr>';
+			
+				sar_tipiniu += '<tr><td>' + lst_automobiliu [ j ].pav 
+							+ '</td><td>' + lst_automobiliu [ j ].greitis 
+							+ '</td><td><input type="button"  value="Įtraukti" onClick="itrauktiTipini(' + j + ')"></td></tr>';
 		
 			}
 			sar_tipiniu += '</table>';		
 			tipiniai = document.getElementById ( 'tipiniai' );
 			tipiniai.innerHTML = sar_tipiniu;
 		}
-		function pateiktiLaika(){
+		function automobiliuLentele() {
 			
-			pateiktasLaikas = parseInt ( document.getElementById ( 'auto_laikas' ).value )
-			for (y = 0; y < automobiliai.length; y++){
-				
-				res_str += automobiliai[y].pav + automobiliai[y].atstumas(pateiktasLaikas) + '<br>';
+			auto_lentele = '<tr><td>' + automobiliai [ i ].pav 
+						+ '</td><td>' + automobiliai [ i ].greitis + '</td></tr>';
+			
+			autoLentele = document.getElementById ( 'autos' );
+			autoLentele.innerHTML += auto_lentele;
+			
+		}		
+		
+		function pateiktiAtstuma(){
+			
+			pateiktasAtstumas = parseInt ( document.getElementById ( 'auto_atstumas' ).value );
+			
+			s = pateiktasAtstumas;
+			
+			tarp_rez = document.getElementById ( 'tarp_rezultatai' ); 
+			
+			tarp_rez.innerHTML = 'Įvestas atstumas: ' + s + 'km';
+			
+		} 
+		
+		function pateiktiLaikoIntervala() {
+			
+			pateiktasLaikoIntervalas = parseInt ( document.getElementById ( 'auto_laikas' ).value );
+			
+			t = pateiktasLaikoIntervalas;
 				
 			
 			rez = document.getElementById ( 'rezultatai' ); 
 			
-			rez.innerHTML = res_str;
+			rez.innerHTML = 'Įvestas laiko intervalas: ' + t + 'min';
+		}
+		
+		function reiksmiuLentele() {
+			
+			lentute ='';
+			for ( j = 0; j < automobiliai.length; j++ ) {
+				lentute += automobiliai[j].reiksmes_intervale(s, t);
+				//console.log(lentute);
+				//console.log(automobiliai[j].funkcijos_reiksmes);
+				//automobiliai[j].nupiesti(s);
 			}
-		} 
+			lent = document.getElementById ( 'reiksmes' ); 
+			lent.innerHTML = lentute;
+		
+		}
+		function pateiktiGrafika() {
+		
+			auto_chart =  new Chart (  'funkcijos_grafikas', 500, 500, 50, 50, 8, 8 );
+
+			
+			grafikas = '';
+			for ( j = 0; j < automobiliai.length; j++ ){
+			
+				automobiliai[j].nupiesti();
+				auto_chart.addValues ( automobiliai [ j ].funkcijos_reiksmes );
+			}
+			auto_chart.draw();			
+			graf = document.getElementById ( 'funkcijos_grafikas' ); 
+			graf.innerHTML = grafikas;
+		}
+		
+
 	</script>
 </head>
 <body>
 	<div id="tipiniai">
 	<input type="button" value="pateikti tipinius" onClick="pateiktiTipinius()">
 	</div>
+	<h2>Įtrauktų automobilių sąrašas</h2>
+	<div id="AutoLentele">
+		
+		<table>
+		<thead>
+		<tr>
+		<th>Pavadinimas</th>
+		<th>Greitis</th>
+		</tr>
+		</thead>
+		<tbody id="autos">
+		
+		</tbody>
+		</table>
 	
+	</div>
 	<div id="naujas_auto">
 		<h2>Įtraukti naują automobilį</h2> 
 		<label for="auto_gr">Automobilio greitis:</label>
-		<input type="text" name="Auto greitis" id="auto_greitis" value="0">
+		<input type="text" name="Auto greitis" id="auto_greitis" value="90">
 		<input type="button" value="Įtraukti naują" onClick="pridetiAutomobili()">
 	</div>
+	<div id="atstumas">	
+		<h2>Įvesti atstumą</h2> 
+		<label for="ivesk_atstuma">Įveskite atstumą:</label>	
+		<input type="text" name="Auto atstumas" id="auto_atstumas" value="100">
+		<input type="button" value="Įvesti atstumą" onClick="pateiktiAtstuma()">
+	</div>
 	<div id="laikas">	
-		<h2>Įtraukti laiką</h2> 
+		<h2>Įtraukti laiko intervalą</h2> 
 		<label for="ivesk_laika">Pateikite laiką:</label>	
-		<input type="text" name="Auto laikas" id="auto_laikas" value="0">
-		<input type="button" value="Įtraukti laiką" onClick="pateiktiLaika()">
+		<input type="text" name="Auto laikas" id="auto_laikas" value="10">
+		<input type="button" value="Pateikti laiko intervalą" onClick="pateiktiLaikoIntervala()">
+	</div>
+	<div id="tarp_rezultatai">
 	</div>
 	<div id="rezultatai">
 	</div>
+	<div id="reiksmes">
+	<input type="button" value="Rodyti skaičiavimus" onClick="reiksmiuLentele()">
+	</div>
+	<input type="button" value="Pateikti grafiką" onClick="pateiktiGrafika()">
+	<br>
+	<canvas id="funkcijos_grafikas" width="500" height="500">
+	
+	</canvas>
 </body>
 </html>
