@@ -15,13 +15,16 @@
 			
 		}
 		
-		present() {  			//metodai - taip vadinamos funkcijos priklausancios klasei
+
+	} 
+	
+	Automobilis.prototype.present = function() {  			//metodai - taip vadinamos funkcijos priklausancios klasei
 							//metodai dirba su savybemis per kreipini this. savybes bendros visems metodams 
 			
-			return ' Automobilio pavadinimas: ' + this.pav + ', greitis: ' +  this.greitis;    //return apraso ka turi grazint ir kaip veikt ir parodo front ende
-		}
+		return ' Automobilio pavadinimas: ' + this.pav + ', greitis: ' +  this.greitis;    //return apraso ka turi grazint ir kaip veikt ir parodo front ende
+	}
 		
-		pradineKoordinate() {
+	Automobilis.prototype.pradineKoordinate = function() {
 			
 			this.xkoordinate = 0;
 			
@@ -33,7 +36,7 @@
 			return this.xkoordinate;
 		}
 
-		reiksmes_intervale(visasKelias, laikoTarpsnis) {
+	Automobilis.prototype.reiksmes_intervale = function(visasKelias, laikoTarpsnis) {
 			
 			this.visasKelias = visasKelias;
 			this.laikoTarpsnis = laikoTarpsnis;
@@ -58,10 +61,10 @@
 			}
 			return this.funkcijos_reiksmiu_lentele();
 		}
-		funkcijos_reiksmiu_lentele() {
 		
-				
-			this.lentele = '<table><tr><th>x</th><th>y</th></tr>';
+	Automobilis.prototype.funkcijos_reiksmiu_lentele = function() {
+		
+			this.lentele = '<table><tr><th>Laikas</th><th>Atstumas</th></tr>';
 
 			for ( i= 0; i < this.funkcijos_reiksmes.length; i++ ) {
 					
@@ -70,21 +73,5 @@
 			this.lentele += '</table>';
 			return this.lentele;		
 		}
-		nupiesti () {
-					
-			var c = document.getElementById( 'funkcijos_grafikas' );
-			var ctx = c.getContext( '2d' );
-			
-			var x_pradinis = this.funkcijos_reiksmes[ 0 ].x;
-			var y_pradinis= this.visasKelias - this.funkcijos_reiksmes[ 0 ].y;
-			ctx.moveTo ( x_pradinis, y_pradinis );
-			
-			for ( i = 0;  i <  this.funkcijos_reiksmes.length; i++ ) {
-
-				var y_grafike =  this.visasKelias - this.funkcijos_reiksmes[ i ].y;
-				ctx.lineTo (this.funkcijos_reiksmes[i].x, parseInt ( y_grafike ) );
-
-			}
-			ctx.stroke();
-		}
-	} 
+		
+	

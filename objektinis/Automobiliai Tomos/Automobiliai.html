@@ -39,7 +39,9 @@
 	</style>
 	<script src="Automobiliai_sarasas.js"></script>
 	<script src="Automobiliai.class.js"></script>
-	<script src="Chart.class.js"></script>	
+	<script src="Chart.class.js"></script>
+	<script src="Autobusas.class.js"></script>	
+	<script src="marsrutai_sarasas.js"></script>
 	<script>
 	
 		automobiliai = [];
@@ -74,7 +76,7 @@
 			i++;
 			z++;
 		}
-		
+				
 		function pateiktiTipinius() {
 		
 			sar_tipiniu = '<h2>Tipinių automobilių sąrašas</h2><table><tr><th>Pavadinimas</th><th>Greitis</th><th>Veiksmas</th></tr>';
@@ -145,7 +147,7 @@
 			grafikas = '';
 			for ( j = 0; j < automobiliai.length; j++ ){
 			
-				automobiliai[j].nupiesti();
+				// automobiliai[j].nupiesti();
 				auto_chart.addValues ( automobiliai [ j ].funkcijos_reiksmes );
 			}
 			auto_chart.draw();			

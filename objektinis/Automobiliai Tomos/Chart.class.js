@@ -188,21 +188,24 @@
 			
 			for ( var i = 0; i < this.allValues.length; i++ ) {
 				
-				this.drawValues1 ( i, y_max );
+				this.drawValues1 ( i, y_max, y_min, x_max, x_min );
 			}
 		}
 		
-		this.drawValues1 = function ( num_values, y_max ) { 
+		this.drawValues1 = function ( num_values, y_max, y_min, x_max, x_min ) { 
 			
-			var x_pradinis = this.allValues [ num_values ] [ 0 ].x;
-			var y_pradinis= y_max - this.allValues [ num_values ] [ 0 ].y;
+			var x_range = x_max - x_min;
+			var x_pradinis =  this.xGridStart + parseInt ( this.plotSizeX * ( this.allValues [ num_values ] [ 0 ].x / x_range ) );
+			var y_range = ( y_max - y_min );
+			var y_pradinis=  this.yGridStart + parseInt ( this.plotSizeY * ( (  y_max - this.allValues [ num_values ] [ 0 ].y ) / y_range ) );
 			
 			this.ctx.moveTo ( x_pradinis, y_pradinis );
 			
 			for ( i = 0;  i <  this.allValues [ num_values ].length; i++ ) {
 
-				var y_grafike =  y_max - this.allValues [ num_values ][ i ].y;
-				this.ctx.lineTo ( this.allValues [ num_values ] [ i ].x, parseInt ( y_grafike ) );
+				var y_grafike = this.yGridStart  + this.plotSizeY *  ( (  y_max - this.allValues [ num_values ][ i ].y ) / y_range );
+				 console.log ( 'x_gr:' + this.allValues [ num_values ] [ i ].x + ' y_gr: ' +  parseInt ( y_grafike ) );
+				this.ctx.lineTo (  this.xGridStart + parseInt ( this.plotSizeX * ( this.allValues [ num_values ] [ i ].x  / x_range ) ), parseInt ( y_grafike ) );
 
 			}
 			this.ctx.stroke();			

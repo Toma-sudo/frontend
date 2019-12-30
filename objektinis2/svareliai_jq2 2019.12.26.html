@@ -1,0 +1,449 @@
+<!DOCTYPE<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Svėrimas</title>
+	<style>
+		body {
+		background-color: black;
+		}
+		h1 {
+			color: gold;
+			width: 100%;
+			font-size: 200%;
+			text-align: center;
+		}
+		input[type=button]{
+			background-color: gold;
+			text-color:blue;
+			position: relative;
+			width: 200px;
+			padding: 5px;
+		}
+		#kairys1 {
+			position: relative;
+			text-color: gold;
+			width: 800px;
+			height: 150px;
+			border: 1px solid gold;
+			padding: 10px;
+			margin-left:10px;
+		}
+		#kairys11 {		
+			position: relative;
+			text-color: gold;
+			float: left;
+			width: 400px;
+			height: 130px;
+			border: 1px solid gold;
+			padding: 10px;
+			}
+		
+		#kairys2 {
+			position: relative;
+			width: 800px;
+			height: 150px;
+			border: 1px solid gold;
+			padding: 10px;
+			margin-left:10px;
+		}
+		#kairys21 {	
+			position: relative;		
+			text-color: gold;
+			width: 400px;
+			height: 130px;
+			float: left;
+			border: 1px solid gold;
+			padding: 10px;
+		}
+		#kairys3 {
+			position: relative;
+			width: 800px;
+			height: 150px;
+			border: 1px solid gold;
+			padding: 10px;
+			margin-left:10px;
+		}
+		#kairys31 {	
+			position: relative;		
+			text-color: gold;
+			width: 400px;
+			height: 130px;
+			float: left;
+			border: 1px solid gold;
+			padding: 10px;
+		}
+		#kairys4 {
+			position: relative;
+			width: 800px;
+			height: 150px;
+			border: 1px solid gold;
+			padding: 10px;
+			margin-left:10px;
+		}		
+		#kairys41 {	
+			position: relative;
+			text-color: gold;
+			width: 400px;
+			height: 130px;
+			float: left;
+			border: 1px solid gold;
+			padding: 10px;
+		}
+		#kairys5 {
+			position: relative;
+			width: 800px;
+			height: 150px;
+			border: 1px solid gold;
+			padding: 10px;
+			margin-left:10px;
+		}
+		#kairys51 {	
+			position: relative;
+			text-color: gold;
+			width: 400px;
+			height: 130px;
+			float: left;
+			border: 1px solid gold;
+			padding: 10px;
+		}
+		#sarasas {
+			position: relative;
+			float: right;
+			padding: 10px;
+			width:300px;
+			background-color:gold;
+			position: relative;
+		
+		}
+		#funkcijos {
+			position: relative;
+			text-color: gold;
+			width: 300px;
+			padding: 10px;
+			font-size: 100%;
+		}
+		label {
+			position: relative;
+			color: gold;
+			display: inline-block;
+			width: 300px;
+		}
+		h2 {	
+			position: relative;
+			color: gold;
+			width: 100%;
+			font-size: 100%;
+			text-align: center;
+		}
+		#ivest_svoris{
+			position: relative;
+			float: right;
+			padding: 10px;
+			width:300px;
+			background-color:gold;
+			position: relative;
+		}
+		#rezultatai {
+			position: relative;
+			float: right;
+			padding: 10px;
+			width:300px;
+			background-color:gold;
+			position: relative;
+		}
+		#svoriuSkirtumas{
+			position: relative;
+			float: right;
+			padding: 10px;
+			width:300px;
+			background-color:gold;
+			position: relative;
+		}
+		#svoriuSumos{
+			position: relative;
+			float: right;
+			padding: 10px;
+			width:300px;
+			background-color:gold;
+			position: relative;
+		}
+			
+	</style>
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+	<script>
+	
+		$( document ).ready ( function() {  
+		
+			svareliu_sarasas = [1, 3, 9, 27]; 
+			skirtumas = [];
+			sumos = [];
+			ivestas_svoris = 0;
+			
+			$( '#sarasas' ).hide();
+			$( '#ivest_svoris' ).hide();
+			$( '#rezultatai' ).hide();
+			$( '#svoriuSkirtumas' ).hide();
+			$( '#svoriuSumos' ).hide();
+	
+			
+
+			$( '#parodyti' ).click ( function () {
+			
+				res_str = 'Turimų svarelių svoriai: ';
+				sar = $( '#sarasas' );
+							
+				for ( i = 0; i < svareliu_sarasas.length; i++ ) {
+							
+					res_str += svareliu_sarasas[ i ] + 'kg ';
+				
+				}
+				
+				sar.html ( res_str );
+				
+				$( '#sarasas' ).show();
+				
+			});
+			$( '#skaiciuoti' ).click ( function () {
+			
+						
+				skirt = $( '#svoriuSkirtumas' );
+				
+				skirtumas[0] = svareliu_sarasas[0];
+				
+				svoriu_skirt = 'Svorių skirtumai: ' + skirtumas[0] + 'kg ';
+							
+				for ( i = 1; i < svareliu_sarasas.length; i++ ) {
+						
+					y = i;
+					skirtumas[ i ] = svareliu_sarasas[ y ] - svareliu_sarasas[ y - 1 ];
+					y--;
+					while (y >= 1){
+						
+						skirtumas[ i ] = skirtumas[ i ] - svareliu_sarasas[ y - 1 ];
+						y--;
+					}
+					svoriu_skirt += skirtumas[ i ] + 'kg ';
+				}
+				
+				skirt.html ( svoriu_skirt );
+				$( '#svoriuSkirtumas' ).show();
+		
+			});
+			$( '#sumuoti' ).click ( function () {
+			
+				sum = $( '#svoriuSumos' );
+				
+				sumos[0] = svareliu_sarasas[0];
+				
+				svoriu_sum = 'Svorių sumos: ' + svareliu_sarasas[0] + 'kg ';
+							
+				for ( i = 1; i < svareliu_sarasas.length; i++ ) {
+						
+					y = i;
+					sumos[ i ] = svareliu_sarasas[ y ] + svareliu_sarasas[ y - 1 ];
+					y--;
+					while (y >= 1){
+						
+						sumos[ i ] = sumos[ i ] + svareliu_sarasas[ y - 1 ];
+						y--;
+					}
+					svoriu_sum += sumos[ i ] + 'kg ';
+				}
+				
+				sum.html ( svoriu_sum );
+				$( '#svoriuSumos' ).show();
+		
+			});
+			
+			$( '#ivesti' ).click ( function () {	
+			 
+				ivestas = '';
+				ivest = $( '#ivest_svoris' );
+	
+				ivestas_svoris = parseInt ( $(  '#svoris' ).val() );
+				if ( ivestas_svoris > 40 || ivestas_svoris < 0 ) {
+					ivestas += 'Prašome įvesti skaičių nuo 0 iki 40';
+				} else {
+					ivestas += 'Įvestas svoris: '+ ivestas_svoris + 'kg'; 
+					}				//priskiriama reiksme
+				ivest.html ( ivestas );
+				$( '#ivest_svoris' ).show();
+			});
+			
+			
+			$( '#isdestyti' ).click ( function () {	
+			
+				kaire_lekste = [];
+				desine_lekste = [];
+				suminis_svoris = 0;
+				rezult = '';
+				res = $( '#rezultatai' );
+				naujas_masyvas = [];
+				
+			
+				//skaičiavimai
+						
+				for ( x = 0; x < svareliu_sarasas.length-1; x++ ) {
+					naujas_masyvas.push ([-svareliu_sarasas[x], 0, svareliu_sarasas[x]]);
+					}
+				naujas_masyvas.push ([0, svareliu_sarasas[svareliu_sarasas.length-1]]);
+					
+				for ( x = 0; x < naujas_masyvas.length; x++) {
+					var innerArrayLength = naujas_masyvas[x].length;
+					for ( y = 0; y < innerArrayLength; y++ ) {
+						suminis_svoris = naujas_masyvas[x][y];
+						if (naujas_masyvas[x][y] > 0){
+							kaire_lekste[x] = naujas_masyvas[x][y];
+						}
+						desine_lekste[x] = 0;
+						if (x-1 >= 0){
+							var innerArrayLength2 = naujas_masyvas[x-1].length;
+							for ( j = 0; j < innerArrayLength2; j++){
+								suminis_svoris = naujas_masyvas[x][y] + naujas_masyvas[x-1][j];
+								if (naujas_masyvas[x-1][j] > 0){
+									kaire_lekste[x-1] = naujas_masyvas[x-1][j];
+									desine_lekste[x-1] = 0;
+								}
+								if (naujas_masyvas[x-1][j] < 0){
+									kaire_lekste [x-1] = 0;
+									desine_lekste[x-1] = Math.abs(naujas_masyvas[x-1][j]);
+								}
+								if (naujas_masyvas[x-1][j] == 0){
+									kaire_lekste[x-1] = 0;
+									desine_lekste[x-1] = 0;
+								}
+								if (x-2 >=0){
+									for ( l = 0; l < innerArrayLength2; l++){
+										suminis_svoris = naujas_masyvas[x][y] + naujas_masyvas[x-1][j] + naujas_masyvas[x-2][l];
+										if (naujas_masyvas[x-2][l] > 0){
+											kaire_lekste[x-2] = naujas_masyvas[x-2][l];
+											desine_lekste[x-2] = 0;
+										}
+										if (naujas_masyvas[x-2][l] < 0){
+											kaire_lekste [x-2] = 0;
+											desine_lekste[x-2] = Math.abs(naujas_masyvas[x-2][l]);
+										}
+										if (naujas_masyvas[x-2][l] == 0){
+											kaire_lekste[x-2] = 0;
+											desine_lekste[x-2] = 0;
+										}
+						
+	
+										if ( x-3 >= 0){
+													
+											for ( n = 0; n < innerArrayLength2; n++){
+												suminis_svoris = naujas_masyvas[x][y] + naujas_masyvas[x-1][j] + naujas_masyvas[x-2][l] + naujas_masyvas[x-3][n];
+												if (naujas_masyvas[x-3][n] > 0){
+													kaire_lekste[x-3] = naujas_masyvas[x-3][n];
+													desine_lekste[x-3] = 0;
+												}
+												if (naujas_masyvas[x-3][n] < 0){
+													kaire_lekste [x-3] = 0;
+													desine_lekste[x-3] = Math.abs(naujas_masyvas[x-3][n]);
+												}
+												if (naujas_masyvas[x-3][n] == 0){
+													kaire_lekste[x-3] = 0;
+													desine_lekste[x-3] = 0;
+												}
+	
+												if (ivestas_svoris == suminis_svoris){
+													
+													break;
+												}
+											}
+											if (ivestas_svoris == suminis_svoris){
+												
+												break;
+											}
+										}
+										if (ivestas_svoris == suminis_svoris){
+									
+										break;
+										}
+									}
+									if (ivestas_svoris == suminis_svoris){
+								
+										break;
+									}
+								}
+								if (ivestas_svoris == suminis_svoris){
+								
+									break;
+								}
+							}
+							if (ivestas_svoris == suminis_svoris){
+							
+							break;
+							}
+						}
+						if (ivestas_svoris == suminis_svoris){
+						
+							break;
+						}
+						
+					}
+					if (ivestas_svoris == suminis_svoris){
+					
+						break;
+					}
+					
+				}
+				rezult += 'Atsakymas: suminis svoris - ' + suminis_svoris + ', kairė lėkštė - ' + kaire_lekste + ', dešinė lėkštė - ' + desine_lekste + '.';
+
+
+				res.html ( rezult );
+				$( '#rezultatai' ).show();
+			});
+		});
+	</script>
+</head>
+<body>
+	<h1>Svėrimas svarstyklėmis</h1>
+	<div id="kairys1">
+		<div id="kairys11">
+			<h2>Turimų svarelių sąrašas</h2>
+			<input type="button" id="parodyti" color="blue" value="Parodyti"> 
+		</div>
+		<div id="sarasas">
+		</div>
+	</div>
+	<div id="kairys2">
+		<div id="kairys21">
+			<h2>Svarelių svorių skirtumas</h2>
+			<input type="button" id="skaiciuoti" color="blue" value="Skaičiuoti"> 
+		</div>
+		<div id="svoriuSkirtumas">
+		</div>
+	</div>
+	<div id="kairys3">
+		<div id="kairys31">
+			<h2>Svarelių svorių sumos</h2>
+			<input type="button" id="sumuoti" color="blue" value="Sumuoti"> 
+		</div>
+		<div id="svoriuSumos">
+		</div>
+	</div>
+	<div id="kairys4">
+		<div id="kairys41">
+			<h2>Pasverti norimo daikto svoris</h2>
+			<div id="funkcijos">
+				<label for="Iveskite_svori" >Įveskite svorį  nuo 1kg iki 40kg </label>
+				<input type="text" name="Ivestas_svor" id="svoris" value="0">
+				<input type="button" id="ivesti" value="Įvesti"> 
+			</div>
+		</div>	
+		<div id="ivest_svoris">
+		</div>
+	</div>
+	<div id="kairys5">
+		<div id="kairys51">
+			<h2>Svarelių dėjimo tvarka</h2>
+			<input type="button" id="isdestyti" value="Išdėstyti"> 
+		</div>
+		<div id="rezultatai">
+		</div>
+	</div>
+</body>
+</html>
