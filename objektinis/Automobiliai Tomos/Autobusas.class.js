@@ -1,15 +1,10 @@
 
 
-	class Autobusas {  
+	function Autobusas (automobilis, marsrutas) {  
 						
-		constructor(automobilis, marsrutas) {  //parametrai
+		  //parametrai
  
 		 	//parametrai vadinami savibemis ir priskiriama this
-			Automobilis.call(this, automobilis)
-			this.marsrutas = marsrutas;
-		
-			
-		}
-		
-
+			Automobilis.call (this, automobilis );
+ 			this.marsrutas = marsrutas;
 	} 

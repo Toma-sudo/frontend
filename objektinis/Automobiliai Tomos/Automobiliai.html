@@ -51,7 +51,7 @@
 		s = 0;
 		t = 0;
 		auto_lentele = '';
-				
+		/*		
 		function pridetiAutomobili() {
 		
 			z++;
@@ -68,10 +68,22 @@
 			automobiliuLentele();
 			i++;
 		}
+		*/
+		function itrauktiTipini( nr, tipas ) {
 		
-		function itrauktiTipini( nr ) {
+			if ( tipas == 'bendras' ) { 
 		
-			automobiliai.push (new Automobilis ( lst_automobiliu [ nr ] ) );
+				automobiliai.push (new Automobilis ( lst_automobiliu [ nr ] ) );
+				
+				alert ( tipas + nr  );					
+			}
+			if ( tipas == 'autobusas' ) {
+			
+				sel_marsrutas = parseInt ( document.getElementById ( 'marsrutas_' + nr ).value );
+			
+				automobiliai.push ( new Autobusas ( lst_automobiliu [ nr ],  lst_marsrutu [ sel_marsrutas ] ) );
+			}
+			
 			automobiliuLentele();
 			i++;
 			z++;
@@ -79,20 +91,35 @@
 				
 		function pateiktiTipinius() {
 		
-			sar_tipiniu = '<h2>Tipinių automobilių sąrašas</h2><table><tr><th>Pavadinimas</th><th>Greitis</th><th>Veiksmas</th></tr>';
+			sar_tipiniu = '<h2>Tipinių automobilių sąrašas</h2><table><tr><th>Pavadinimas</th><th>Greitis</th><th>Maršrutai</th><th>Veiksmas</th></tr>';
 		
 			for ( j = 0; j < lst_automobiliu.length; j++ ) {
 			
-				sar_tipiniu += '<tr><td>' + lst_automobiliu [ j ].pav 
+				if(lst_automobiliu [ j ].tipas == 'bendras'){
+			
+					sar_tipiniu += '<tr><td>' + lst_automobiliu [ j ].pav 
 							+ '</td><td>' + lst_automobiliu [ j ].greitis 
-							+ '</td><td><input type="button"  value="Įtraukti" onClick="itrauktiTipini(' + j + ')"></td></tr>';
+							+ '</td><td>'
+							+ '</td><td><input type="button"  value="Įtraukti" onClick="itrauktiTipini(' + j + ', \'bendras\')"></td></tr>';
 		
+				}
+				else {
+					sar_tipiniu += '<tr><td>' + lst_automobiliu [ j ].pav 
+						+ '</td><td>' + lst_automobiliu [ j ].greitis 
+						+ '</td><td> <select id="marsrutas_' + j + '">'
+						+ marsrutu_selectas() 
+						+ '</select>' 
+						+ '</td><td><input type="button"  value="Įtraukti" onClick="itrauktiTipini(' + j + ', \'autobusas\')"></td></tr>';
+				}
 			}
 			sar_tipiniu += '</table>';		
 			tipiniai = document.getElementById ( 'tipiniai' );
 			tipiniai.innerHTML = sar_tipiniu;
 		}
 		function automobiliuLentele() {
+		
+			console.log ( automobiliai );
+			console.log ( 'i: ' + i );
 			
 			auto_lentele = '<tr><td>' + automobiliai [ i ].pav 
 						+ '</td><td>' + automobiliai [ i ].greitis + '</td></tr>';
@@ -162,6 +189,7 @@
 	<div id="tipiniai">
 	<input type="button" value="pateikti tipinius" onClick="pateiktiTipinius()">
 	</div>
+
 	<h2>Įtrauktų automobilių sąrašas</h2>
 	<div id="AutoLentele">
 		
@@ -196,6 +224,7 @@
 		<input type="text" name="Auto laikas" id="auto_laikas" value="10">
 		<input type="button" value="Pateikti laiko intervalą" onClick="pateiktiLaikoIntervala()">
 	</div>
+
 	<div id="tarp_rezultatai">
 	</div>
 	<div id="rezultatai">

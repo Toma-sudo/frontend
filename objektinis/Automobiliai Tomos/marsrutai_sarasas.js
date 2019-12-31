@@ -16,3 +16,14 @@
 		]
 		}
 	]; 
+		
+	function marsrutu_selectas() {
+		
+		selectas = '';
+		
+		for ( m = 0; m < lst_marsrutu.length; m++ ) {
+		
+			selectas += '<option value="' + m + '">' + lst_marsrutu[ m ].pav + '</option>';
+		}
+		return selectas;
+	}
